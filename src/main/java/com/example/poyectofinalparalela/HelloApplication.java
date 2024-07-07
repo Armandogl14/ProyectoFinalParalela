@@ -1,19 +1,11 @@
 package com.example.poyectofinalparalela;
 
-import com.example.poyectofinalparalela.transito.Intersection;
-import com.example.poyectofinalparalela.transito.TrafficController;
-import com.example.poyectofinalparalela.transito.TrafficLight;
-import com.example.poyectofinalparalela.transito.Vehicle;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.Phaser;
 
 public class HelloApplication extends Application {
     @Override

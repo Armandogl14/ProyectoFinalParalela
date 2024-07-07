@@ -6,12 +6,10 @@ import java.util.concurrent.Phaser;
 public class TrafficLight {
     private String id;
     private AtomicBoolean green;
-    private Phaser phaser;
 
-    public TrafficLight(String id, Phaser phaser) {
+    public TrafficLight(String id) {
         this.id = id;
         this.green = new AtomicBoolean(false);
-        this.phaser = phaser;
     }
 
     public String getId() {
@@ -28,10 +26,5 @@ public class TrafficLight {
 
     public void changeLight() {
         green.set(!green.get());
-        phaser.arriveAndAwaitAdvance(); // Synchronize the change with other traffic lights
-    }
-
-    public void setPhaser(Phaser phaser) {
-        this.phaser = phaser;
     }
 }
