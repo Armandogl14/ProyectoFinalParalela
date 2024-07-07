@@ -1,5 +1,7 @@
 package com.example.poyectofinalparalela.transito;
 
+import com.example.poyectofinalparalela.visuales.ControladorVista;
+
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -8,6 +10,7 @@ public class TrafficController {
     private List<TrafficLight> trafficLights;
     private ScheduledExecutorService executor;
     private Phaser phaser;
+    private ControladorVista controladorVista = new ControladorVista();
 
     public TrafficController(Street intersection, List<TrafficLight> trafficLights, List<Street> streets) {
         this.streets= streets;
@@ -28,7 +31,10 @@ public class TrafficController {
 
     public void manageIntersection() {
         for (TrafficLight trafficLight : trafficLights) {
+            System.out.println("Traffic light " + trafficLight.getId() + " is " + (trafficLight.isGreen() ? "green" : "red"));
+
             if (trafficLight.isGreen()) {
+            controladorVista.cambiarColorSemaforoVerde(Integer.parseInt(trafficLight.getId()));
                 for (Street street : streets) {
                     if (street.getTrafficLight().equals(trafficLight)) {
                         if (street.hasEmergencyVehicle()) {
@@ -36,6 +42,7 @@ public class TrafficController {
                             processVehiclesInStreet(street);
                             phaser.arriveAndDeregister(); // Liberar bloqueo después de procesar
                         } else {
+                           controladorVista.cambiarColorSemaforoRojo(Integer.parseInt(trafficLight.getId()));
                             Vehicle vehicle = street.getNextVehicle(street.getId());
                             if (vehicle != null) {
                                 vehicle.setInIntersection(true);

@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.poyectofinalparalela.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<Pane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.poyectofinalparalela.visuales.ControladorVista">
+    <!-- Líneas que representan las calles -->
+    <Line endX="1420" endY="325" startX="0" startY="325" strokeWidth="70" />
+    <Line endX="1420" endY="375" startX="0" startY="375" strokeWidth="70" />
+    <Line endX="685" endY="700" startX="685" startY="0" strokeWidth="70" />
+    <Line endX="735" endY="700" startX="735" startY="0" strokeWidth="70" />
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+    <!-- Círculos que representan los semáforos -->
+    <Circle fx:id="semaforoNoroeste" centerX="685" centerY="325" fill="RED" layoutX="-45.0" layoutY="50.0" radius="10" />
+    <Circle fx:id="semaforoNoreste" centerX="735" centerY="325" fill="RED" layoutX="45.0" radius="10" />
+    <Circle fx:id="semaforoSur_oeste" centerX="685" centerY="375" fill="RED" layoutY="-95.0" radius="10" />
+    <Circle fx:id="semaforoSur_este" centerX="735" centerY="375" fill="RED" layoutY="45.0" radius="10" />
+   <Circle  fx:id="bola" fill="DODGERBLUE" layoutX="880.0" layoutY="180.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+</Pane>
