@@ -1,7 +1,10 @@
-package com.example.poyectofinalparalela.transito;
+package com.example.poyectofinalparalela.transito.;
 
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class TrafficController {
@@ -33,22 +36,18 @@ public class TrafficController {
     }
 
     private void processStreet(Street street) {
-        Vehicle vehicle = street.getNextVehicle(street.getId());
-
-        if (street.hasEmergencyVehicle()) {
-            processEmergencyVehicle(street);
-        }
-        else{
-            if (vehicle == null) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
+        while (true) {
+            Vehicle vehicle;
+            if (street.hasEmergencyVehicle()) {
+                processEmergencyVehicle(street);
+                return; // Una vez procesados todos los vehículos de emergencia, salir del bucle
+            } else {
+                vehicle = street.getNextVehicle(street.getId());
+                if (vehicle == null) {
+                    break; // Si no hay más vehículos, salir del bucle
                 }
-                return;
+                tryToCrossIntersection(vehicle);
             }
-
-            tryToCrossIntersection(vehicle);
         }
     }
 
@@ -57,31 +56,32 @@ public class TrafficController {
         while ((vehicle = street.getNextVehicle(street.getId())) != null) {
             crossIntersection(vehicle);
             if (vehicle.isEmergency()) {
-                break;
+                break; // Detener el procesamiento después del cruce del vehículo de emergencia
             }
         }
     }
 
     private void tryToCrossIntersection(Vehicle vehicle) {
-
-        if (lock.tryLock()) {
-            try {
-                // Simular la detención en una señal de "Stop"
-                System.out.println("Vehicle " + vehicle.getId() + " is stopping at the stop sign");
-                try {
-                    Thread.sleep(500); // Simular la detención en la señal de "Stop" (500 ms)
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    return;
-                }
-                if (!intersectionOccupied) {
-                    intersectionOccupied = true;
-                    crossIntersection(vehicle);
-                    intersectionOccupied = false;
-                }
-            } finally {
+        lock.lock();
+        try {
+            while (intersectionOccupied) {
                 lock.unlock();
+                Thread.sleep(100); // Esperar un poco antes de intentar nuevamente
+                lock.lock();
             }
+            intersectionOccupied = true;
+
+            // Simular la detención en una señal de "Stop"
+            System.out.println("Vehicle " + vehicle.getId() + " is stopping at the stop sign");
+            Thread.sleep(500); // Simular la detención en la señal de "Stop" (500 ms)
+
+            crossIntersection(vehicle);
+
+            intersectionOccupied = false;
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } finally {
+            lock.unlock();
         }
     }
 

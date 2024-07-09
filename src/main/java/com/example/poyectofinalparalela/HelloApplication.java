@@ -33,7 +33,7 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
-        TrafficController trafficController = new TrafficController(null, semaforos, calles);
+        TrafficController trafficController = new TrafficController(semaforos, calles);
         trafficController.startControl();
         trafficController.manageIntersection();
 
