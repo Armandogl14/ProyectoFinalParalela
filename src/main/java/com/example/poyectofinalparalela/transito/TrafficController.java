@@ -1,4 +1,4 @@
-package com.example.poyectofinalparalela.transito.;
+package com.example.poyectofinalparalela.transito;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
