@@ -1,84 +1,103 @@
 package com.example.poyectofinalparalela.transito;
 
-import com.example.poyectofinalparalela.visuales.ControladorVista;
-
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class TrafficController {
     private List<Street> streets; //Lista de calles (Intersection representa una calle)
     private List<TrafficLight> trafficLights;
     private ScheduledExecutorService executor;
-    private Phaser phaser;
-    private ControladorVista controladorVista = new ControladorVista();
+    ExecutorService exec;
+    ReentrantLock lock;
+    //private Phaser phaser;
+    private boolean intersectionOccupied = false;
 
-    public TrafficController(Street intersection, List<TrafficLight> trafficLights, List<Street> streets) {
+    public TrafficController(List<TrafficLight> trafficLights, List<Street> streets) {
         this.streets= streets;
         this.trafficLights = trafficLights;
-        this.executor = Executors.newScheduledThreadPool(trafficLights.size() + 2);
-        this.phaser = new Phaser(1);
+        this.executor = Executors.newScheduledThreadPool(1);
+        this.exec = Executors.newFixedThreadPool(streets.size());
+        this.lock = new ReentrantLock();
+        //this.phaser = new Phaser(1);
     }
 
     public void startControl() {
-        for (TrafficLight trafficLight : trafficLights) {
-            executor.scheduleAtFixedRate(() -> {
-                phaser.arriveAndAwaitAdvance(); // Esperar hasta que se permita cambiar
-                trafficLight.changeLight();
-            }, 0, 60, TimeUnit.SECONDS);
-        }
         executor.scheduleAtFixedRate(this::manageIntersection, 0, 1, TimeUnit.SECONDS);
     }
 
     public void manageIntersection() {
-        for (TrafficLight trafficLight : trafficLights) {
-            System.out.println("Traffic light " + trafficLight.getId() + " is " + (trafficLight.isGreen() ? "green" : "red"));
+        for (Street street : streets) {
+            exec.submit(() -> processStreet(street));
+        }
+    }
 
-            if (trafficLight.isGreen()) {
-            controladorVista.cambiarColorSemaforoVerde(Integer.parseInt(trafficLight.getId()));
-                for (Street street : streets) {
-                    if (street.getTrafficLight().equals(trafficLight)) {
-                        if (street.hasEmergencyVehicle()) {
-                            phaser.bulkRegister(1); // Bloquear cambios de semáforo
-                            processVehiclesInStreet(street);
-                            phaser.arriveAndDeregister(); // Liberar bloqueo después de procesar
-                        } else {
-                           controladorVista.cambiarColorSemaforoRojo(Integer.parseInt(trafficLight.getId()));
-                            Vehicle vehicle = street.getNextVehicle(street.getId());
-                            if (vehicle != null) {
-                                vehicle.setInIntersection(true);
-                                System.out.println("Vehicle " + vehicle.getId() + " is crossing the intersection");
-                                try {
-                                    Thread.sleep(1000); // Simular el cruce de la intersección
-                                } catch (InterruptedException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                vehicle.setInIntersection(false);
-                            }
-                        }
-                    }
+    private void processStreet(Street street) {
+        Vehicle vehicle = street.getNextVehicle(street.getId());
+
+        if (street.hasEmergencyVehicle()) {
+            processEmergencyVehicle(street);
+        }
+        else{
+            if (vehicle == null) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
                 }
+                return;
+            }
+
+            tryToCrossIntersection(vehicle);
+        }
+    }
+
+    private void processEmergencyVehicle(Street street) {
+        Vehicle vehicle;
+        while ((vehicle = street.getNextVehicle(street.getId())) != null) {
+            crossIntersection(vehicle);
+            if (vehicle.isEmergency()) {
+                break;
             }
         }
     }
 
-    private void processVehiclesInStreet(Street street) {
-        Vehicle vehicle;
-        while ((vehicle = street.getNextVehicle(street.getId())) != null) {
-            vehicle.setInIntersection(true);
-            System.out.println("Vehicle " + vehicle.getId() + " is crossing the intersection");
+    private void tryToCrossIntersection(Vehicle vehicle) {
+
+        if (lock.tryLock()) {
             try {
-                Thread.sleep(1000); // Simular el cruce de la intersección
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            vehicle.setInIntersection(false);
-            if (vehicle.isEmergency()) {
-                break; // Detener el procesamiento después del cruce del vehículo de emergencia
+                // Simular la detención en una señal de "Stop"
+                System.out.println("Vehicle " + vehicle.getId() + " is stopping at the stop sign");
+                try {
+                    Thread.sleep(500); // Simular la detención en la señal de "Stop" (500 ms)
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+                if (!intersectionOccupied) {
+                    intersectionOccupied = true;
+                    crossIntersection(vehicle);
+                    intersectionOccupied = false;
+                }
+            } finally {
+                lock.unlock();
             }
         }
+    }
+
+    private void crossIntersection(Vehicle vehicle) {
+        vehicle.setInIntersection(true);
+        System.out.println("Vehicle " + vehicle.getId() + " is crossing the intersection");
+        try {
+            Thread.sleep(1000); // Simular el cruce de la intersección
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        vehicle.setInIntersection(false);
     }
 
     public void stopControl() {
         executor.shutdown();
+        exec.shutdown();
     }
 }

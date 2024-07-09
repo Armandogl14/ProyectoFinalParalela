@@ -5,12 +5,12 @@ import java.util.concurrent.PriorityBlockingQueue;
 public class Street {
     private String id;
     private PriorityBlockingQueue<Vehicle> vehicles;
-    private TrafficLight trafficLight; //Semaforo que permite que los autos de dicha calle crucen la intersección
+    //private TrafficLight trafficLight; //Semaforo que permite que los autos de dicha calle crucen la intersección
 
     public Street(String id, TrafficLight trafficLight) {
         this.id = id;
         this.vehicles = new PriorityBlockingQueue<>(10);
-        this.trafficLight = trafficLight;
+        //this.trafficLight = trafficLight;
     }
 
     public String getId() {
@@ -29,13 +29,13 @@ public class Street {
         this.vehicles = vehicles;
     }
 
-    public TrafficLight getTrafficLight() {
+    /*public TrafficLight getTrafficLight() {
         return trafficLight;
-    }
+    }*/
 
-    public void setTrafficLight(TrafficLight trafficLight) {
+    /*public void setTrafficLight(TrafficLight trafficLight) {
         this.trafficLight = trafficLight;
-    }
+    }*/
 
     public void addVehicle(Vehicle vehicle) {
         vehicles.add(vehicle);
