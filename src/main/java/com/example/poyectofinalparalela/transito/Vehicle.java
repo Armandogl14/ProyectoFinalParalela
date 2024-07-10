@@ -2,13 +2,13 @@ package com.example.poyectofinalparalela.transito;
 
 public class Vehicle implements Comparable<Vehicle> {
     String id;
-    private String type;
+    private boolean isEmergency;
     private String direction;
     private boolean inIntersection;
 
-    public Vehicle(String id, String type, String direction) {
+    public Vehicle(String id, boolean isEmergency, String direction) {
         this.id = id;
-        this.type = type;
+        this.isEmergency = isEmergency;
         this.direction = direction;
         this.inIntersection = false;
     }
@@ -21,12 +21,12 @@ public class Vehicle implements Comparable<Vehicle> {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public boolean isEmergency() {
+        return isEmergency;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setEmergency(boolean isEmergency) {
+        this.isEmergency = isEmergency;
     }
 
     public String getDirection() {
@@ -45,17 +45,8 @@ public class Vehicle implements Comparable<Vehicle> {
         this.inIntersection = inIntersection;
     }
 
-    public boolean isEmergency() {
-        return "emergency".equalsIgnoreCase(type);
-    }
-
     @Override
     public int compareTo(Vehicle other) {
-        if (this.isEmergency() && !other.isEmergency()) {
-            return -1;
-        } else if (!this.isEmergency() && other.isEmergency()) {
-            return 1;
-        }
         return this.id.compareTo(other.id);
     }
 }

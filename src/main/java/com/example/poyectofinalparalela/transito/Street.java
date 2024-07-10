@@ -7,7 +7,7 @@ public class Street {
     private PriorityBlockingQueue<Vehicle> vehicles;
     //private TrafficLight trafficLight; //Semaforo que permite que los autos de dicha calle crucen la intersección
 
-    public Street(String id, TrafficLight trafficLight) {
+    public Street(String id) {
         this.id = id;
         this.vehicles = new PriorityBlockingQueue<>(10);
         //this.trafficLight = trafficLight;
@@ -41,7 +41,7 @@ public class Street {
         vehicles.add(vehicle);
     }
 
-    public Vehicle getNextVehicle(String direction) {
+    public Vehicle getNextVehicle() {
         return vehicles.poll();
     }
 
