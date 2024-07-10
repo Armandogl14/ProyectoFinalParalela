@@ -3,18 +3,29 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
 
-<Pane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.poyectofinalparalela.visuales.ControladorVista">
+<Pane prefHeight="736.0" prefWidth="1490.0" style="-fx-background-color: Green;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.poyectofinalparalela.visuales.ControladorVista">
     <!-- Líneas que representan las calles -->
-    <Line endX="1420" endY="325" startX="0" startY="325" strokeWidth="70" />
-    <Line endX="1420" endY="375" startX="0" startY="375" strokeWidth="70" />
-    <Line endX="685" endY="700" startX="685" startY="0" strokeWidth="70" />
-    <Line endX="735" endY="700" startX="735" startY="0" strokeWidth="70" />
+    <Line fx:id="calle_O" endX="1420" endY="325" startX="0" startY="325" strokeWidth="70" />
+    <Line fx:id="calle_E" endX="1420" endY="375" startX="0" startY="375" strokeWidth="70" />
+    <Line fx:id="calle_S" endX="685" endY="700" startX="685" startY="0" strokeWidth="70" />
+    <Line fx:id="calle_N" endX="735" endY="700" startX="735" startY="0" strokeWidth="70" />
 
     <!-- Círculos que representan los semáforos -->
-    <Circle fx:id="semaforoNoroeste" centerX="685" centerY="325" fill="RED" layoutX="-45.0" layoutY="50.0" radius="10" />
-    <Circle fx:id="semaforoNoreste" centerX="735" centerY="325" fill="RED" layoutX="45.0" radius="10" />
-    <Circle fx:id="semaforoSur_oeste" centerX="685" centerY="375" fill="RED" layoutY="-95.0" radius="10" />
-    <Circle fx:id="semaforoSur_este" centerX="735" centerY="375" fill="RED" layoutY="45.0" radius="10" />
-   <Circle  fx:id="bola" fill="DODGERBLUE" layoutX="880.0" layoutY="180.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+    <Circle fx:id="semaforoNoroeste" centerX="685" centerY="325" fill="RED" layoutX="-45.0" layoutY="50.0" opacity="0.0" radius="10" />
+    <Circle fx:id="semaforoNoreste" centerX="735" centerY="325" fill="RED" layoutX="45.0" opacity="0.0" radius="10" />
+    <Circle fx:id="semaforoSur_oeste" centerX="685" centerY="375" fill="RED" layoutY="-95.0" opacity="0.0" radius="10" />
+    <Circle fx:id="semaforoSur_este" centerX="735" centerY="375" fill="RED" layoutY="45.0" opacity="0.0" radius="10" />
+
+    <Rectangle fx:id="interseccion" fill="GRAY" height="124.0" opacity="0.0" width="121.0" x="650.0" y="290.0" />
+   <Line fx:id="linea" endX="529.0" layoutX="115.0" layoutY="350.0" startX="-115.0" stroke="YELLOW" />
+   <Line fx:id="linea1" endX="529.0" layoutX="887.0" layoutY="349.0" startX="-115.0" stroke="YELLOW" />
+   <Line fx:id="linea11" endX="87.0" endY="74.0" layoutX="623.0" layoutY="336.0" startX="87.0" startY="399.0" stroke="YELLOW" />
+   <Line fx:id="linea111" endX="172.5" endY="191.0" layoutX="538.0" layoutY="99.0" startX="172.5" startY="-99.0" stroke="YELLOW" />
+   <Line endX="66.0" endY="9.408203125" layoutX="579.0" layoutY="330.0" scaleX="10.0" scaleY="9.0" startX="66.0" startY="23.100013732910156" stroke="WHITE" />
+   <Line endX="127.0330810546875" endY="9.279738426208496" layoutX="644.0" layoutY="276.0" scaleY="10.0" startX="6.0" startY="9.273297309875488" stroke="WHITE" />
+   <Line endX="10.0" endY="129.0" layoutX="761.0" layoutY="281.0" scaleX="10.0" startX="10.066149711608887" startY="4.408203125" stroke="WHITE" />
+   <Line endX="0.0330810546875" endY="119.70709228515625" layoutX="771.0" layoutY="291.0" scaleY="10.0" startX="-128.0" startY="119.70709228515625" stroke="WHITE" />
+   <Pane fx:id="pane" prefHeight="736.0" prefWidth="1345.0" />
 </Pane>
