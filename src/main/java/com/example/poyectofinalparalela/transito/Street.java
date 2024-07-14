@@ -1,5 +1,6 @@
 package com.example.poyectofinalparalela.transito;
 
+import java.util.List;
 import java.util.concurrent.PriorityBlockingQueue;
 
 public class Street {
@@ -22,7 +23,7 @@ public class Street {
     }
 
     public PriorityBlockingQueue<Vehicle> getVehicles() {
-        return vehicles;
+        return  vehicles;
     }
 
     public void setVehicles(PriorityBlockingQueue<Vehicle> vehicles) {
@@ -53,4 +54,9 @@ public class Street {
         }
         return false;
     }
+    public List<Vehicle> getVehiclesList() {
+        return List.copyOf(vehicles);
+    }
+
+
 }

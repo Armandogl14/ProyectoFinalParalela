@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.poyectofinalparalela.visuales.ImputVisual">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: Grey;">
+         <children>
+            <Separator layoutY="105.0" prefHeight="0.0" prefWidth="600.0" />
+            <TextArea editable="false" layoutX="69.0" layoutY="8.0" prefHeight="88.0" prefWidth="466.0" text="Ingrese la cantidad de vehiculos">
+               <font>
+                  <Font name="Bauhaus 93" size="30.0" />
+               </font>
+            </TextArea>
+            <Spinner fx:id="spinner" editable="true" layoutX="229.0" layoutY="184.0" prefHeight="33.0" prefWidth="142.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
