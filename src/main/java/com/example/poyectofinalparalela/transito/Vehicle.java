@@ -1,10 +1,17 @@
 package com.example.poyectofinalparalela.transito;
 
+import javafx.scene.image.Image;
+
 public class Vehicle implements Comparable<Vehicle> {
     String id;
     private boolean isEmergency;
     private String direction;
     private boolean inIntersection;
+    private int X;
+    private int Y;
+    private int sizeY;
+    private int sizeX;
+    private Image image;
 
     public Vehicle(String id, boolean isEmergency, String direction) {
         this.id = id;
