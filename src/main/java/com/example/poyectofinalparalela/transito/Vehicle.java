@@ -6,6 +6,7 @@ public class Vehicle implements Comparable<Vehicle> {
     String id;
     private boolean isEmergency;
     private String direction;
+    private String origin;
     private boolean inIntersection;
     private int X;
     private int Y;
@@ -13,11 +14,17 @@ public class Vehicle implements Comparable<Vehicle> {
     private int sizeX;
     private Image image;
 
-    public Vehicle(String id, boolean isEmergency, String direction) {
+    public Vehicle(String id, boolean isEmergency, String direction, String origin, int X, int Y, int sizeX, int sizeY, Image image) {
         this.id = id;
         this.isEmergency = isEmergency;
         this.direction = direction;
+        this.origin = origin;
         this.inIntersection = false;
+        this.X = X;
+        this.Y = Y;
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+        this.image = image;
     }
 
     public String getId() {
@@ -50,6 +57,54 @@ public class Vehicle implements Comparable<Vehicle> {
 
     public void setInIntersection(boolean inIntersection) {
         this.inIntersection = inIntersection;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public int getX() {
+        return X;
+    }
+
+    public void setX(int x) {
+        X = x;
+    }
+
+    public int getY() {
+        return Y;
+    }
+
+    public void setY(int y) {
+        Y = y;
+    }
+
+    public int getSizeY() {
+        return sizeY;
+    }
+
+    public void setSizeY(int sizeY) {
+        this.sizeY = sizeY;
+    }
+
+    public int getSizeX() {
+        return sizeX;
+    }
+
+    public void setSizeX(int sizeX) {
+        this.sizeX = sizeX;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     @Override

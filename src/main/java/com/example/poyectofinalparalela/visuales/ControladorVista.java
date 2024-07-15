@@ -1,6 +1,6 @@
 package com.example.poyectofinalparalela.visuales;
 
-import com.example.poyectofinalparalela.transito.Street;
+import com.example.poyectofinalparalela.transito.Intersection;
 import com.example.poyectofinalparalela.transito.Vehicle;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
@@ -26,8 +26,8 @@ public class ControladorVista {
 
     private Map<String, Rectangle> vehiculos = new HashMap<>();
 
-    public void initialize(List<Street> calles) {
-        for (Street calle : calles) {
+    public void initialize(List<Intersection> calles) {
+        for (Intersection calle : calles) {
             PriorityBlockingQueue<Vehicle> vehiculos = calle.getVehicles();
             for (Vehicle vehiculo : vehiculos) {
                 Rectangle rectangle = createVehicleRectangle(vehiculo.getDirection());

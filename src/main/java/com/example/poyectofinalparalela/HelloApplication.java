@@ -1,13 +1,11 @@
 package com.example.poyectofinalparalela;
 
-import com.example.poyectofinalparalela.transito.Street;
-import com.example.poyectofinalparalela.transito.TrafficController;
+import com.example.poyectofinalparalela.transito.Intersection;
 import com.example.poyectofinalparalela.transito.TrafficLight;
 import com.example.poyectofinalparalela.transito.Vehicle;
 import com.example.poyectofinalparalela.visuales.ControladorVista;
 import com.example.poyectofinalparalela.visuales.ImputVisual;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,16 +20,16 @@ import java.util.List;
 public class HelloApplication extends Application {
 
     private List<TrafficLight> semaforos = new ArrayList<>();
-    private List<Street> calles = new ArrayList<>();
+    private List<Intersection> calles = new ArrayList<>();
     private static ControladorVista controladorVista;
     private static ImputVisual imputVisual = new ImputVisual();
     int cantidadVehiculos ;
 
     @Override
     public void start(Stage stage) throws IOException {
-        abrirIngresarDatos();
-        inicializarSemaforosYCalles();
-        Trafico_vista(stage);
+        //abrirIngresarDatos();
+        //inicializarSemaforosYCalles();
+        //Trafico_vista(stage);
 //        Trafico_vista(stage);
 //        FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
 //        FXMLLoader inicio = new FXMLLoader(getClass().getResource("IngresarDatos.fxml"));
@@ -50,7 +48,7 @@ public class HelloApplication extends Application {
 
         // Dejar la simulación correr por un tiempo y luego detenerla
     }
-    public void abrirIngresarDatos() {
+    /*public void abrirIngresarDatos() {
         try {
             // Carga el archivo FXML para el nuevo escenario
             FXMLLoader loader = new FXMLLoader(getClass().getResource("IngresarDatos.fxml"));
@@ -101,7 +99,7 @@ public class HelloApplication extends Application {
         return new Vehicle(id, signal, direction);
     }
 
-    public void addRandomVehiclesToStreet(Street street, int quantity) {
+    public void addRandomVehiclesToStreet(Intersection street, int quantity) {
         for (int i = 0; i < quantity; i++) {
             Vehicle vehicle = generateRandomVehicle();
             System.out.println("Vehicle " + vehicle.getId() + " added to street " + street.getId());
@@ -122,7 +120,7 @@ public class HelloApplication extends Application {
         semaforos.add(trafficLight4);
 
         // Crear calles y agregar vehículos
-        Street street1 = new Street("N");
+        Intersection street1 = new Intersection("N");
         Vehicle vehicle = new Vehicle("1", false, "S");
         street1.addVehicle(vehicle);
         Vehicle vehicle2 = new Vehicle("2", false, "S");
@@ -132,7 +130,7 @@ public class HelloApplication extends Application {
 //        addRandomVehiclesToStreet(street1, cantidadVehiculos);
         calles.add(street1);
 
-        Street street2 = new Street("E");
+        Intersection street2 = new Intersection("E");
         Vehicle vehicle4 = new Vehicle("4", true, "W");
         street2.addVehicle(vehicle4);
         Vehicle vehicle5 = new Vehicle("5", false, "W");
@@ -140,7 +138,7 @@ public class HelloApplication extends Application {
 //        addRandomVehiclesToStreet(street2, cantidadVehiculos);
         calles.add(street2);
 
-        Street street3 = new Street("S");
+        Intersection street3 = new Intersection("S");
         Vehicle vehicle6 = new Vehicle("6", false, "N");
         street3.addVehicle(vehicle6);
         Vehicle vehicle7 = new Vehicle("7", false, "N");
@@ -148,12 +146,12 @@ public class HelloApplication extends Application {
 //        addRandomVehiclesToStreet(street3, cantidadVehiculos);
         calles.add(street3);
 
-        Street street4 = new Street("W");
+        Intersection street4 = new Intersection("W");
         Vehicle vehicle8 = new Vehicle("8", false, "E");
         street4.addVehicle(vehicle8);
 //        addRandomVehiclesToStreet(street4, cantidadVehiculos);
         calles.add(street4);
-    }
+    }*/
 
     public static void main(String[] args) {
 
