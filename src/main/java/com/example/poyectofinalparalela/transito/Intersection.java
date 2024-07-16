@@ -7,14 +7,13 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 public class Intersection {
     private String id;
-    private ConcurrentLinkedQueue<Vehicle> vehicles;
-    private ConcurrentLinkedQueue<Vehicle> crossingVehicles;
+    private PriorityBlockingQueue<Vehicle> vehicles;
     private boolean isIntersectionFree;
+    public static int vID = 0;
 
     public Intersection(String id, boolean isIntersectionFree) {
         this.id = id;
-        this.vehicles = new ConcurrentLinkedQueue<>();
-        this.crossingVehicles = new ConcurrentLinkedQueue<>();
+        this.vehicles = new PriorityBlockingQueue<>();
         this.isIntersectionFree = isIntersectionFree;
     }
 
@@ -26,28 +25,21 @@ public class Intersection {
         this.id = id;
     }
 
-    public ConcurrentLinkedQueue<Vehicle> getVehicles() {
+    public PriorityBlockingQueue<Vehicle> getVehicles() {
         return  vehicles;
     }
 
-    public void setVehicles(ConcurrentLinkedQueue<Vehicle> vehicles) {
+    public void setVehicles(PriorityBlockingQueue<Vehicle> vehicles) {
         this.vehicles = vehicles;
     }
 
     public void addVehicle(Vehicle vehicle) {
         vehicles.add(vehicle);
+        vID++;
     }
 
     public Vehicle getNextVehicle() {
         return vehicles.poll();
-    }
-
-    public ConcurrentLinkedQueue<Vehicle> getCrossingVehicles() {
-        return crossingVehicles;
-    }
-
-    public void setCrossingVehicles(ConcurrentLinkedQueue<Vehicle> crossingVehicles) {
-        this.crossingVehicles = crossingVehicles;
     }
 
     public boolean isIntersectionFree() {
@@ -56,6 +48,10 @@ public class Intersection {
 
     public void setIntersectionFree(boolean intersectionFree) {
         isIntersectionFree = intersectionFree;
+    }
+
+    public static int getvID() {
+        return vID;
     }
 
     //Este no creo que sea necesario, ya que el condicional se llama cuando se agrega un vehiculo para verificar si es emergencia o no.
@@ -71,9 +67,9 @@ public class Intersection {
         return List.copyOf(vehicles);
     }
 
-    public void handleEmergency(String direction){
+    public void handleEmergency(String origen){
         for(Vehicle vehicle : vehicles){
-            if(vehicle.getDirection().equalsIgnoreCase(direction)){
+            if(vehicle.getOrigin().equalsIgnoreCase(origen)){
                 //Aqui va el metodo de cruzar, creo que va en las visuales porque tiene animaciones
                 if(vehicle.isEmergency()){
                     break;

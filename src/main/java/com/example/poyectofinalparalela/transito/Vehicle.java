@@ -2,6 +2,8 @@ package com.example.poyectofinalparalela.transito;
 
 import javafx.scene.image.Image;
 
+import java.util.Date;
+
 public class Vehicle implements Comparable<Vehicle> {
     String id;
     private boolean isEmergency;
@@ -13,6 +15,7 @@ public class Vehicle implements Comparable<Vehicle> {
     private int sizeY;
     private int sizeX;
     private Image image;
+    private Date creacion;
 
     public Vehicle(String id, boolean isEmergency, String direction, String origin, int X, int Y, int sizeX, int sizeY, Image image) {
         this.id = id;
@@ -25,6 +28,7 @@ public class Vehicle implements Comparable<Vehicle> {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.image = image;
+        this.creacion = new Date();
     }
 
     public String getId() {
@@ -107,8 +111,16 @@ public class Vehicle implements Comparable<Vehicle> {
         this.image = image;
     }
 
+    public Date getCreacion() {
+        return creacion;
+    }
+
+    public void setCreacion(Date creacion) {
+        this.creacion = creacion;
+    }
+
     @Override
     public int compareTo(Vehicle other) {
-        return this.id.compareTo(other.id);
+        return this.creacion.compareTo(other.creacion);
     }
 }

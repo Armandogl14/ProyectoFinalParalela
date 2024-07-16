@@ -33,60 +33,88 @@ public class ControladorVista {
         //Aqui se llama el constructor que manejes los hilos
     }
     @FXML
-    private void handleBtnNormalNorte() {
+    private void handleBtnNormalNorte(String direction) {
         System.out.println("Botón normal norte presionado.");
         // Aquí va la lógica específica para este botón
         //tipo se crea un un vehiculo y se manda a la lista de vehiculos
+        Vehicle carro = new Vehicle("V"+ Intersection.getvID(), false, direction, "N", 666, 0, 30, 20, null);
+        addVehicle(carro);
+        intersection.addVehicle(carro);
         // X = 666, Y = 0
     }
 
     @FXML
-    private void handleBtnNorteEmergencia() {
+    private void handleBtnNorteEmergencia(String direction) {
         System.out.println("Botón norte emergencia presionado.");
         // Aquí va la lógica específica para este botón
         //como crea un carro en logico y lo visual y hacer un cambio de estado para saber que hay un vehiculo de emergencia
+        Vehicle carro = new Vehicle("V"+ Intersection.getvID(), true, "straight", "N", 666, 0, 30, 20, null);
+        addVehicle(carro);
+        intersection.addVehicle(carro);
+        intersection.handleEmergency("N");
         // X = 666, Y = 0
     }
 
     @FXML
-    private void handleBtnNormalSur() {
+    private void handleBtnNormalSur(String direction) {
         System.out.println("Botón normal sur presionado.");
         // Aquí va la lógica específica para este botón
+        Vehicle carro = new Vehicle("V"+ Intersection.getvID(), false, direction, "S", 838, 664, 30, 20, null);
+        addVehicle(carro);
+        intersection.addVehicle(carro);
         // X = 838, Y = 664
     }
 
     @FXML
-    private void handleBtnSurEmergencia() {
+    private void handleBtnSurEmergencia(String direction) {
         System.out.println("Botón sur emergencia presionado.");
         // Aquí va la lógica específica para este botón
+        Vehicle carro = new Vehicle("V"+ Intersection.getvID(), true, direction, "S", 838, 664, 30, 20, null);
+        addVehicle(carro);
+        intersection.addVehicle(carro);
+        intersection.handleEmergency("S");
         // X = 838, Y = 664
     }
 
     @FXML
-    private void handleBtnNormalEste() {
+    private void handleBtnNormalEste(String direction) {
         System.out.println("Botón normal este presionado.");
+        Vehicle carro = new Vehicle("V"+ Intersection.getvID(), false, direction, "E", 1414, 305, 30, 20, null);
+        addVehicle(carro);
+        intersection.addVehicle(carro);
         // Aquí va la lógica específica para este botón
         // X = 1414, Y = 305
     }
 
     @FXML
-    private void handleBtnEsteEmergencia() {
+    private void handleBtnEsteEmergencia(String direction) {
         System.out.println("Botón este emergencia presionado.");
         // Aquí va la lógica específica para este botón
+        Vehicle carro = new Vehicle("V"+ Intersection.getvID(), true, direction, "E", 1414, 305, 30, 20, null);
+        addVehicle(carro);
+        intersection.addVehicle(carro);
+        intersection.handleEmergency("E");
         // X = 1414, Y = 305
     }
 
     @FXML
-    private void handleBtnNormalOeste() {
+    private void handleBtnNormalOeste(String direction) {
         System.out.println("Botón normal oeste presionado.");
+        Vehicle carro = new Vehicle("V"+ Intersection.getvID(), false, direction, "W", 0, 402, 30, 20, null);
+        addVehicle(carro);
+        intersection.addVehicle(carro);
         // Aquí va la lógica específica para este botón
         // X = 0, Y = 402
     }
 
     @FXML
-    private void handleBtnOesteEmergencia() {
+    private void handleBtnOesteEmergencia(String direction) {
         System.out.println("Botón oeste emergencia presionado.");
         // Aquí va la lógica específica para este botón
+        Vehicle carro = new Vehicle("V"+ Intersection.getvID(), true, direction, "W", 0, 402, 30, 20, null);
+        addVehicle(carro);
+        intersection.addVehicle(carro);
+        intersection.handleEmergency("W");
         // X = 0, Y = 402
     }
 
