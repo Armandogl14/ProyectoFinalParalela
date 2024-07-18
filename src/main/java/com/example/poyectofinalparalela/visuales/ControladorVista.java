@@ -246,7 +246,10 @@ public class ControladorVista {
                         intersection.setIntersectionFree(false);
                         //Animacion de cruzar la interseccion
                         intersection.setIntersectionFree(true);
+                        //sacar vehiculos de la cola (quitalo si da problemas)
                         System.out.println("El vehiculo" + vehicle.getId() + " ha cruzado la interseccion");
+                        intersection.getVehicles().remove(vehicle);
+                        vehicles.remove(vehicle);
                     }
                 });
             }
