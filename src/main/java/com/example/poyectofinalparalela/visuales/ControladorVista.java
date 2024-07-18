@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
 public class ControladorVista {
@@ -36,7 +37,7 @@ public class ControladorVista {
     private Rectangle interseccion;
 
     private Map<String, Rectangle> vehiculos = new HashMap<>();
-    private PriorityBlockingQueue<Vehicle> vehicles = new PriorityBlockingQueue<>();
+    private ConcurrentLinkedQueue<Vehicle> vehicles = new ConcurrentLinkedQueue<>(); // prueba con este, no es tan jodon con la prioridad
     private List<Vehicle> vehicleList = new LinkedList<>();
     private Vehicle vehicle;
     private Intersection intersection ;
@@ -66,6 +67,9 @@ public class ControladorVista {
         Vehicle carro = new Vehicle("V"+ Intersection.getvID(), true, getDireccion(), "N", 666, 0, 30, 20, null);
         addVehicle(carro);
         intersection.addVehicle(carro);
+        while(!intersection.isIntersectionFree()){
+            System.out.println("La interseccion esta ocupada");
+        }
         intersection.handleEmergency("N");
         // X = 666, Y = 0
     }
@@ -87,6 +91,9 @@ public class ControladorVista {
         Vehicle carro = new Vehicle("V"+ Intersection.getvID(), true, getDireccion(), "S", 838, 664, 30, 20, null);
         addVehicle(carro);
         intersection.addVehicle(carro);
+        while(!intersection.isIntersectionFree()){
+            System.out.println("La interseccion esta ocupada");
+        }
         intersection.handleEmergency("S");
         // X = 838, Y = 664
     }
@@ -108,6 +115,9 @@ public class ControladorVista {
         Vehicle carro = new Vehicle("V"+ Intersection.getvID(), true, getDireccion(), "E", 1414, 305, 30, 20, null);
         addVehicle(carro);
         intersection.addVehicle(carro);
+        while(!intersection.isIntersectionFree()){
+            System.out.println("La interseccion esta ocupada");
+        }
         intersection.handleEmergency("E");
         // X = 1414, Y = 305
     }
@@ -129,6 +139,9 @@ public class ControladorVista {
         Vehicle carro = new Vehicle("V"+ Intersection.getvID(), true, getDireccion(), "W", 0, 402, 30, 20, null);
         addVehicle(carro);
         intersection.addVehicle(carro);
+        while(!intersection.isIntersectionFree()){
+            System.out.println("La interseccion esta ocupada");
+        }
         intersection.handleEmergency("W");
         // X = 0, Y = 402
     }
@@ -226,6 +239,14 @@ public class ControladorVista {
                     if (isVehicleInIntersection(vehicle)) {
                         // Lógica específica si el vehículo está en la intersección
                         System.out.println("El vehículo está en la intersección.");
+                        while (!intersection.isIntersectionFree()) {
+                            System.out.println("La intersección está ocupada.");
+                        }
+                        System.out.println("El vehiculo" + vehicle.getId() + " esta cruzando la interseccion");
+                        intersection.setIntersectionFree(false);
+                        //Animacion de cruzar la interseccion
+                        intersection.setIntersectionFree(true);
+                        System.out.println("El vehiculo" + vehicle.getId() + " ha cruzado la interseccion");
                     }
                 });
             }

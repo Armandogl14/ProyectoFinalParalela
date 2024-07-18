@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 import java.util.Date;
 
-public class Vehicle implements Comparable<Vehicle> {
+public class Vehicle  {
     String id;
     private boolean isEmergency;
     private String direction;
@@ -117,10 +117,5 @@ public class Vehicle implements Comparable<Vehicle> {
 
     public void setCreacion(Date creacion) {
         this.creacion = creacion;
-    }
-
-    @Override
-    public int compareTo(Vehicle other) {
-        return this.creacion.compareTo(other.creacion);
     }
 }

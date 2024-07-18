@@ -6,14 +6,14 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
 public class Intersection {
-    private String id;
-    private PriorityBlockingQueue<Vehicle> vehicles;
-    private boolean isIntersectionFree;
+    private String id; 
+    private ConcurrentLinkedQueue<Vehicle> vehicles;
+    private volatile boolean isIntersectionFree;
     public static int vID = 0;
 
     public Intersection(String id, boolean isIntersectionFree) {
         this.id = id;
-        this.vehicles = new PriorityBlockingQueue<>();
+        this.vehicles = new ConcurrentLinkedQueue<>();
         this.isIntersectionFree = isIntersectionFree;
     }
 
@@ -25,11 +25,11 @@ public class Intersection {
         this.id = id;
     }
 
-    public PriorityBlockingQueue<Vehicle> getVehicles() {
+    public ConcurrentLinkedQueue<Vehicle> getVehicles() {
         return  vehicles;
     }
 
-    public void setVehicles(PriorityBlockingQueue<Vehicle> vehicles) {
+    public void setVehicles(ConcurrentLinkedQueue<Vehicle> vehicles) {
         this.vehicles = vehicles;
     }
 
@@ -75,15 +75,6 @@ public class Intersection {
                     break;
                 }
             }
-        }
-    }
-
-    //La idea de este es que cuando in vehiculo llegue a la interseccion, se llame a este metodo.
-    public void crossIntersection(Vehicle vehicle){
-        if(isIntersectionFree){
-            isIntersectionFree = false;
-            //Aqui van las animaciones
-            isIntersectionFree = true;
         }
     }
 }
