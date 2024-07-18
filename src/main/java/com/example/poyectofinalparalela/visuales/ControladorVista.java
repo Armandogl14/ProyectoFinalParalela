@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import java.lang.invoke.SwitchPoint;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -159,18 +160,26 @@ public class ControladorVista {
                     case "N":
                         startX = Referenciia_norte.getLayoutX();
                         startY = Referenciia_norte.getLayoutY();
+                        vehicle.setX((int) startX);
+                        vehicle.setY((int) startY);
                         break;
                     case "S":
                         startX = Referenciia_sur.getLayoutX();
                         startY = Referenciia_sur.getLayoutY();
+                        vehicle.setX((int) startX);
+                        vehicle.setY((int) startY);
                         break;
                     case "E":
                         startX = Referenciia_este.getLayoutX();
                         startY = Referenciia_este.getLayoutY();
+                        vehicle.setX((int) startX);
+                        vehicle.setY((int) startY);
                         break;
                     case "W":
                         startX = Referenciia_oeste.getLayoutX();
                         startY = Referenciia_oeste.getLayoutY();
+                        vehicle.setX((int) startX);
+                        vehicle.setY((int) startY);
                         break;
                 }
 
@@ -186,9 +195,27 @@ public class ControladorVista {
                 transition.setNode(vehiculo);
                 transition.setDuration(Duration.seconds(2)); // Duración de la transición
 
-                double endX = interseccion.getLayoutX() - startX;
-                double endY = interseccion.getLayoutY() - startY;
-
+                  double endX = 0;
+                  double endY = 0;
+                  System.out.println("endX: " + endX + ", endY: " + endY);
+                switch(vehicle.getOrigin()){
+                    case "N":
+                        endY = interseccion.getLayoutY() - startY - vehicle.getSizeY();
+                        vehicle.setY((int) endY);
+                        break;
+                    case "S":
+                        endY = interseccion.getLayoutY() + interseccion.getHeight() - startY;
+                        vehicle.setY((int) endY);
+                        break;
+                    case "E":
+                        endX = interseccion.getLayoutX() + interseccion.getWidth() - startX;
+                        vehicle.setX((int) endX);
+                        break;
+                    case "W":
+                        endX = interseccion.getLayoutX() - startX - vehicle.getSizeX();
+                        vehicle.setX((int) endX);
+                        break;
+                }
                 transition.setByX(endX);
                 transition.setByY(endY);
 
