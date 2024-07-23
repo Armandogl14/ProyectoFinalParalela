@@ -45,7 +45,7 @@ public class ControladorVista {
 
     public void initialize() {
         //Aqui se llama el constructor que manejes los hilos
-        this.intersection = new Intersection("I1", true);
+        this.intersection = new Intersection("I1", true, this);
     }
     @FXML
     private void handleBtnNormalNorte() {
@@ -66,7 +66,7 @@ public class ControladorVista {
         //como crea un carro en logico y lo visual y hacer un cambio de estado para saber que hay un vehiculo de emergencia
         String direccion = getDireccion();
         Vehicle carro = new Vehicle("V"+ Intersection.getvID(), true, direccion, "N", 666, 0, 30, 20, null);
-        addVehicle(carro);
+//        addVehicle(carro);
         intersection.addVehicle(carro);
         while(!intersection.isIntersectionFree()){
             System.out.println("La interseccion esta ocupada");
@@ -216,7 +216,7 @@ public class ControladorVista {
                 // Crear la transición para mover el vehículo hacia la intersección
                 TranslateTransition transition = new TranslateTransition();
                 transition.setNode(vehiculo);
-                transition.setDuration(Duration.seconds(1)); // Duración de la transición
+                transition.setDuration(Duration.seconds(7)); // Duración de la transición
 
                   double endX = 0;
                   double endY = 0;
@@ -298,7 +298,7 @@ public class ControladorVista {
 //
 //        transitionInterseccion.play();
 //    }
-    private void crussingVisual(Vehicle vehicle) {
+    public void crussingVisual(Vehicle vehicle) {
         Rectangle vehiculo = vehiculos.get(vehicle.getId());
 
         TranslateTransition transition = new TranslateTransition();

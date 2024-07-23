@@ -1,5 +1,7 @@
 package com.example.poyectofinalparalela.transito;
 
+import com.example.poyectofinalparalela.visuales.ControladorVista;
+
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -10,11 +12,13 @@ public class Intersection {
     private ConcurrentLinkedQueue<Vehicle> vehicles;
     private volatile boolean isIntersectionFree;
     public static int vID = 0;
+    ControladorVista controladorVista = new ControladorVista();
 
-    public Intersection(String id, boolean isIntersectionFree) {
+    public Intersection(String id, boolean isIntersectionFree, ControladorVista controladorVista) {
         this.id = id;
         this.vehicles = new ConcurrentLinkedQueue<>();
         this.isIntersectionFree = isIntersectionFree;
+        this.controladorVista = controladorVista;
     }
 
     public String getId() {
@@ -71,6 +75,7 @@ public class Intersection {
         for(Vehicle vehicle : vehicles){
             if(vehicle.getOrigin().equalsIgnoreCase(origen)){
                 //Aqui va el metodo de cruzar, creo que va en las visuales porque tiene animaciones
+                controladorVista.crussingVisual(vehicle);
                 if(vehicle.isEmergency()){
                     break;
                 }
