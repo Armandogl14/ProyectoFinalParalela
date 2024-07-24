@@ -11,10 +11,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.lang.invoke.SwitchPoint;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
@@ -402,6 +399,16 @@ public class ControladorVista {
 
         return vehiculoX >= interseccionX && vehiculoX <= interseccionX + interseccionWidth &&
                 vehiculoY >= interseccionY && vehiculoY <= interseccionY + interseccionHeight;
+    }
+
+    private Vehicle getLastVehicleInOrigin(String origin) {
+        Stack<Vehicle> stack = new Stack<>();
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getOrigin().equals(origin)) {
+                stack.push(vehicle);
+            }
+        }
+        return stack.isEmpty() ? null : stack.pop();
     }
 
 //    public void moverVehiculoInterseccion(String vehicleId, String direction) {
