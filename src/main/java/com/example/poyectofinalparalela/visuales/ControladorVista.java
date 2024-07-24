@@ -373,10 +373,14 @@ public class ControladorVista {
                     case "Izquierda":
                         endY = Referenciia_sur.getLayoutY() - vehiculo.getLayoutY();
                         transition.setByY(endY);
+                        transition2.setByX(Referenciia_sur.getLayoutX() / 5);
+                        transition2.play();
                         break;
                     case "Derecha":
                         endY = Referenciia_norte.getLayoutY() - vehiculo.getLayoutY();
                         transition.setByY(endY);
+                        transition2.setByX(Referenciia_norte.getLayoutX() / 2);
+                        transition2.play();
                         break;
                     case "U-Turn":
                         endX = interseccion.getWidth() * 2;
