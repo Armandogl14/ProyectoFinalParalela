@@ -33,6 +33,8 @@
                </effect>
             </Button>
             <Rectangle fx:id="interseccion" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="221.0" layoutX="583.0" layoutY="268.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="374.0" />
+            <Rectangle fx:id="Llegada_oeste" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="47.0" layoutY="305.0" stroke="BLACK" strokeType="INSIDE" width="62.0" />
+            <Rectangle fx:id="Llegada_este" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="47.0" layoutX="1414.0" layoutY="402.0" stroke="BLACK" strokeType="INSIDE" width="62.0" />
          </children>
       </Pane>
    </children>

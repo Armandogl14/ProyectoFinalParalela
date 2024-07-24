@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Rectangle?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.poyectofinalparalela.visuales.ImputVisual">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1420.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: Grey;">
+      <Pane prefHeight="700.0" prefWidth="1420.0">
          <children>
-            <Separator layoutY="105.0" prefHeight="0.0" prefWidth="600.0" />
-            <TextArea editable="false" layoutX="69.0" layoutY="8.0" prefHeight="88.0" prefWidth="466.0" text="Ingrese la cantidad de vehiculos">
-               <font>
-                  <Font name="Bauhaus 93" size="30.0" />
-               </font>
-            </TextArea>
-            <Spinner fx:id="spinner" editable="true" layoutX="229.0" layoutY="184.0" prefHeight="33.0" prefWidth="142.0" />
+            <ImageView fitHeight="708.0" fitWidth="1558.0">
+               <image>
+                  <Image url="@Esenario.png" />
+               </image>
+            </ImageView>
+            <Rectangle fx:id="Ref_Norte_izquierda" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="-2.0" layoutY="379.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
+            <Rectangle fx:id="Ref_Norte_Derecha" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="-2.0" layoutY="475.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
+            <Rectangle fx:id="Ref_Norte_Centro" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="-2.0" layoutY="429.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
+            <Rectangle fx:id="Ref_sur_izquierda1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="1360.0" layoutY="322.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
+            <Rectangle fx:id="Ref_sur_Derecha1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="1360.0" layoutY="226.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
+            <Rectangle fx:id="Ref_sur_Centro1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="1360.0" layoutY="276.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
          </children>
       </Pane>
    </children>
-</AnchorPane>
+</Pane>
