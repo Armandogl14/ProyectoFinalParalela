@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.poyectofinalparalela.visuales.Seleccionador">
+   <children>
+      <Pane layoutX="14.0" layoutY="14.0" prefHeight="374.0" prefWidth="575.0" style="-fx-background-color: Grey;">
+         <children>
+            <Button fx:id="escenario1Button" layoutX="30.0" layoutY="28.0" onAction="#handleEscenario1ButtonAction" mnemonicParsing="false" prefHeight="123.0" prefWidth="485.0" style="-fx-background-color: Green;" text="Escenario 1">
+               <font>
+                  <Font size="58.0" />
+               </font>
+            </Button>
+            <Button fx:id="escenario2Button" layoutX="30.0" layoutY="187.0" onAction="#handleEscenario2ButtonAction" mnemonicParsing="false" prefHeight="123.0" prefWidth="485.0" style="-fx-background-color: Red;" text="Escenario 2">
+               <font>
+                  <Font size="58.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

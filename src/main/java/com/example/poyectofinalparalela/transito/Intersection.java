@@ -12,7 +12,7 @@ public class Intersection {
     private ConcurrentLinkedQueue<Vehicle> vehicles;
     private volatile boolean isIntersectionFree;
     public static int vID = 0;
-    ControladorVista controladorVista = new ControladorVista();
+    ControladorVista controladorVista;
 
     public Intersection(String id, boolean isIntersectionFree, ControladorVista controladorVista) {
         this.id = id;
@@ -39,6 +39,10 @@ public class Intersection {
 
     public void addVehicle(Vehicle vehicle) {
         vehicles.add(vehicle);
+        if(!vehicle.isEmergency()){
+            //Aqui va el metodo de cruzar, creo que va en las visuales porque tiene animaciones
+            controladorVista.addVehicle(vehicle);
+        }
         vID++;
     }
 
@@ -75,7 +79,7 @@ public class Intersection {
         for(Vehicle vehicle : vehicles){
             if(vehicle.getOrigin().equalsIgnoreCase(origen)){
                 //Aqui va el metodo de cruzar, creo que va en las visuales porque tiene animaciones
-                controladorVista.crussingVisual(vehicle);
+                controladorVista.addVehicle(vehicle);
                 if(vehicle.isEmergency()){
                     break;
                 }
