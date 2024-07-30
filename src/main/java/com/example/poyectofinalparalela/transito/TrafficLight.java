@@ -24,6 +24,10 @@ public class TrafficLight {
         return green.get();
     }
 
+    public void setGreen(boolean green) {
+        this.green.set(green);
+    }
+
     public void changeLight() {
         green.set(!green.get());
     }
