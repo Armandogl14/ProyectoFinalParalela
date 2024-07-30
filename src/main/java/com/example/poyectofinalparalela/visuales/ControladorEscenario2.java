@@ -92,6 +92,7 @@ public class ControladorEscenario2 {
     private void setGreenLights(List<TrafficLight> lights, boolean green) {
         for (TrafficLight light : lights) {
             light.setGreen(green);
+            System.out.println("Cambiando luz " + light.getId() + " a " + (green ? "verde" : "rojo"));
             //Aqui va el metodo de cambiar la luz en la vista
             //Tambien los carros de esa calle se mueven
         }
