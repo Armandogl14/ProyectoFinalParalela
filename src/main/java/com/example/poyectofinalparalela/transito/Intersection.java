@@ -2,88 +2,93 @@ package com.example.poyectofinalparalela.transito;
 
 import com.example.poyectofinalparalela.visuales.ControladorVista;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.PriorityBlockingQueue;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Intersection {
-    private String id; 
-    private ConcurrentLinkedQueue<Vehicle> vehicles;
+    private static int vID = 0;
+    private String id;
     private volatile boolean isIntersectionFree;
-    public static int vID = 0;
-    ControladorVista controladorVista;
+    private ControladorVista controladorVista;
+    private Lock lock;
+    private Condition intersectionFreeCondition;
+    private List<Vehicle> vehicles;
 
     public Intersection(String id, boolean isIntersectionFree, ControladorVista controladorVista) {
         this.id = id;
-        this.vehicles = new ConcurrentLinkedQueue<>();
         this.isIntersectionFree = isIntersectionFree;
         this.controladorVista = controladorVista;
+        this.lock = new ReentrantLock();
+        this.intersectionFreeCondition = lock.newCondition();
+        this.vehicles = new ArrayList<>();
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public ConcurrentLinkedQueue<Vehicle> getVehicles() {
-        return  vehicles;
-    }
-
-    public void setVehicles(ConcurrentLinkedQueue<Vehicle> vehicles) {
-        this.vehicles = vehicles;
-    }
-
-    public void addVehicle(Vehicle vehicle) {
-        vehicles.add(vehicle);
-        if(!vehicle.isEmergency()){
-            //Aqui va el metodo de cruzar, creo que va en las visuales porque tiene animaciones
-            controladorVista.addVehicle(vehicle);
-        }
-        vID++;
-    }
-
-    public Vehicle getNextVehicle() {
-        return vehicles.poll();
+    public static int getvID() {
+        return vID++;
     }
 
     public boolean isIntersectionFree() {
         return isIntersectionFree;
     }
 
-    public void setIntersectionFree(boolean intersectionFree) {
-        isIntersectionFree = intersectionFree;
+    public void setIntersectionFree(boolean isIntersectionFree) {
+        this.isIntersectionFree = isIntersectionFree;
     }
 
-    public static int getvID() {
-        return vID;
+    public void addVehicle(Vehicle vehicle) {
+        vehicles.add(vehicle);
+        controladorVista.addVehicle(vehicle);
     }
 
-    //Este no creo que sea necesario, ya que el condicional se llama cuando se agrega un vehiculo para verificar si es emergencia o no.
-    /*public boolean hasEmergencyVehicle() {
+    public List<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void handleEmergency(String origin) {
         for (Vehicle vehicle : vehicles) {
-            if (vehicle.isEmergency()) {
-                return true;
-            }
-        }
-        return false;
-    }*/
-    public List<Vehicle> getVehiclesList() {
-        return List.copyOf(vehicles);
-    }
-
-    public void handleEmergency(String origen){
-        for(Vehicle vehicle : vehicles){
-            if(vehicle.getOrigin().equalsIgnoreCase(origen)){
-                //Aqui va el metodo de cruzar, creo que va en las visuales porque tiene animaciones
-                controladorVista.addVehicle(vehicle);
-                if(vehicle.isEmergency()){
-                    break;
+            if (vehicle.getOrigin().equalsIgnoreCase(origin)) {
+                lock.lock();
+                try {
+                    while (!isIntersectionFree) {
+                        System.out.println("Waiting for intersection to be free");
+                        intersectionFreeCondition.await();
+                    }
+                    isIntersectionFree = false;
+                    System.out.println("Intersection is free");
+                    controladorVista.addVehicle(vehicle);
+                    if (vehicle.isEmergency()) {
+                        break;
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } finally {
+                    isIntersectionFree = true;
+                    intersectionFreeCondition.signalAll();
+                    lock.unlock();
                 }
             }
+        }
+    }
+
+    public void handleNormal(Vehicle vehicle) {
+        lock.lock();
+        try {
+            while (!isIntersectionFree) {
+                System.out.println("Waiting for intersection to be free");
+                intersectionFreeCondition.await();
+            }
+            isIntersectionFree = false;
+            System.out.println("Intersection is free");
+            controladorVista.addVehicle(vehicle);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } finally {
+            isIntersectionFree = true;
+            intersectionFreeCondition.signalAll();
+            lock.unlock();
         }
     }
 }
