@@ -17,6 +17,8 @@ public class Seleccionador {
 
     private ControladorVista controladorVista;
 
+    private ControladorEscenario2 controladorEscenario2;
+
     public Seleccionador() {
         // No es necesario cargar el FXML aquí, JavaFX lo hace automáticamente
     }
@@ -29,13 +31,22 @@ public class Seleccionador {
         controladorVista = loader.getController();
 
         Scene scene = new Scene(root, 1420, 700);
-        stage.setTitle("Control de Tráfico");
+        stage.setTitle("Escenario 1");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
-    private void handleEscenario2ButtonAction() {
+    private void handleEscenario2ButtonAction() throws IOException {
         // Handle action for Escenario 2 button
+        Stage stage = (Stage) escenario1Button.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/poyectofinalparalela/IngresarDatos.fxml"));
+        Parent root = loader.load();
+        controladorEscenario2 = loader.getController();
+
+        Scene scene = new Scene(root, 1420, 700);
+        stage.setTitle("Escenario 2");
+        stage.setScene(scene);
+        stage.show();
     }
 }

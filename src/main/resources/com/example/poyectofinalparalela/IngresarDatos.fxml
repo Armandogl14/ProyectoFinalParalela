@@ -4,9 +4,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1420.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1420.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.poyectofinalparalela.visuales.ControladorEscenario2">
    <children>
       <Pane prefHeight="700.0" prefWidth="1420.0">
          <children>
@@ -21,16 +22,19 @@
             <Rectangle fx:id="Ref_sur_izquierda1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="1360.0" layoutY="322.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
             <Rectangle fx:id="Ref_sur_Derecha1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="1360.0" layoutY="226.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
             <Rectangle fx:id="Ref_sur_Centro1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="1360.0" layoutY="276.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
-            <Rectangle fx:id="Interseccion_1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="274.0" layoutX="864.0" layoutY="227.0" stroke="BLACK" strokeType="INSIDE" width="188.0" />
-            <Rectangle fx:id="Interseccion_2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="274.0" layoutX="333.0" layoutY="227.0" stroke="BLACK" strokeType="INSIDE" width="188.0" />
+            <Rectangle fx:id="Interseccion_2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="274.0" layoutX="864.0" layoutY="227.0" stroke="BLACK" strokeType="INSIDE" width="188.0" />
+            <Rectangle fx:id="Interseccion_1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="274.0" layoutX="333.0" layoutY="227.0" stroke="BLACK" strokeType="INSIDE" width="188.0" />
             <Rectangle fx:id="ref_arriba_1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="932.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
             <Rectangle fx:id="ref_sur_1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="932.0" layoutY="666.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
             <Rectangle fx:id="ref_arriba_2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="401.0" layoutY="5.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
             <Rectangle fx:id="ref_sur_2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="401.0" layoutY="664.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
-            <Button fx:id="Btn_normal_norte" layoutX="487.0" layoutY="91.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Vehiculo - norte" />
-            <Button fx:id="Btn_emergecia_norte" layoutX="487.0" layoutY="139.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Emergencia - norte" />
-            <Button fx:id="Btn_normal_sur" layoutX="760.0" layoutY="91.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Vehiculo - sur" />
-            <Button fx:id="Btn_emergecia_sur" layoutX="760.0" layoutY="139.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Emergencia - sur" />
+            <Button fx:id="Btn_normal_norte" layoutX="487.0" layoutY="91.0" mnemonicParsing="false" prefHeight="34.0" onAction="#handleBtnNormalNorteAction" prefWidth="120.0" text="Vehiculo - norte" />
+            <Button fx:id="Btn_emergecia_norte" layoutX="487.0" layoutY="139.0" mnemonicParsing="false" prefHeight="34.0" onAction="#handleBtnEmergenciaNorteAction" prefWidth="120.0" text="Emergencia - norte" />
+            <Button fx:id="Btn_normal_sur" layoutX="760.0" layoutY="91.0" mnemonicParsing="false" prefHeight="34.0" onAction="#handleBtnNormalSurAction" prefWidth="120.0" text="Vehiculo - sur" />
+            <Button fx:id="Btn_emergecia_sur" layoutX="760.0" layoutY="139.0" mnemonicParsing="false" prefHeight="34.0" onAction="#handleBtnEmergenciaSurAction" prefWidth="120.0" text="Emergencia - sur" /><Circle fx:id="Semaforo_1" fill="#ff1f1f" layoutX="359.0" layoutY="449.0" radius="26.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="Semaforo_2" fill="#ff1f1f" layoutX="495.0" layoutY="296.0" radius="26.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="Semaforo_4" fill="#ff1f1f" layoutX="890.0" layoutY="449.0" radius="26.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="Semaforo_3" fill="#ff1f1f" layoutX="1026.0" layoutY="296.0" radius="26.0" stroke="BLACK" strokeType="INSIDE" />
          </children>
       </Pane>
    </children>

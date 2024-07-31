@@ -186,7 +186,7 @@ public class ControladorVista {
 
                 TranslateTransition transition = new TranslateTransition();
                 transition.setNode(vehiculo);
-                transition.setDuration(Duration.seconds(2));
+                transition.setDuration(Duration.seconds(5));
 
                 double endX = 0;
                 double endY = 0;
@@ -230,7 +230,7 @@ public class ControladorVista {
 
         TranslateTransition transition = new TranslateTransition();
         transition.setNode(vehiculo);
-        transition.setDuration(Duration.seconds(2));
+        transition.setDuration(Duration.seconds(1));
 
         TranslateTransition transition2 = new TranslateTransition();
         transition2.setNode(vehiculo);
@@ -247,23 +247,23 @@ public class ControladorVista {
                         vehicle.setY((int) endY);
                         break;
                     case "Derecha":
-                        endY = interseccion.getLayoutY() - vehiculo.getLayoutY();
+                        endY = Referenciia_oeste.getLayoutY() / 4;
                         transition.setByY(endY);
-                        endX = interseccion.getLayoutX() + interseccion.getWidth() - vehiculo.getLayoutX();
+                        endX = Referenciia_oeste.getLayoutX() - vehiculo.getLayoutX();
                         transition2.setByX(endX);
                         vehicle.setX((int) endX);
                         vehicle.setY((int) endY);
                         break;
                     case "Izquierda":
-                        endY = interseccion.getLayoutY() - vehiculo.getLayoutY();
+                        endY = Referenciia_este.getLayoutY() / 2;
                         transition.setByY(endY);
-                        endX = interseccion.getLayoutX() - vehiculo.getLayoutX() - vehiculo.getWidth();
+                        endX = Referenciia_este.getLayoutX() - vehiculo.getLayoutX();
                         transition2.setByX(endX);
                         vehicle.setX((int) endX);
                         vehicle.setY((int) endY);
                         break;
                     case "U-Turn":
-                        endY = interseccion.getLayoutY() - vehiculo.getLayoutY();
+                        endY =  interseccion.getHeight() * 2;
                         transition.setByY(endY);
                         endY = Referenciia_norte.getLayoutY() - vehiculo.getLayoutY();
                         transition2.setByY(endY);
@@ -279,23 +279,23 @@ public class ControladorVista {
                         vehicle.setY((int) endY);
                         break;
                     case "Derecha":
-                        endY = interseccion.getLayoutY() + interseccion.getHeight() - vehiculo.getLayoutY();
+                        endY = -Llegada_este.getLayoutY() / 4;
                         transition.setByY(endY);
-                        endX = interseccion.getLayoutX() - vehiculo.getLayoutX() - vehiculo.getWidth();
+                        endX =Referenciia_este.getLayoutX() - vehiculo.getLayoutX();
                         transition2.setByX(endX);
                         vehicle.setX((int) endX);
                         vehicle.setY((int) endY);
                         break;
                     case "Izquierda":
-                        endY = interseccion.getLayoutY() + interseccion.getHeight() - vehiculo.getLayoutY();
+                        endY = Referenciia_oeste.getLayoutX() - vehiculo.getLayoutX();
                         transition.setByY(endY);
-                        endX = interseccion.getLayoutX() + interseccion.getWidth() - vehiculo.getLayoutX();
+                        endX = -Llegada_oeste.getLayoutY() / 2;
                         transition2.setByX(endX);
                         vehicle.setX((int) endX);
                         vehicle.setY((int) endY);
                         break;
                     case "U-Turn":
-                        endY = interseccion.getLayoutY() + interseccion.getHeight() - vehiculo.getLayoutY();
+                        endY = -Referenciia_sur.getHeight() * 2;
                         transition.setByY(endY);
                         endY = Referenciia_sur.getLayoutY() - vehiculo.getLayoutY();
                         transition2.setByY(endY);
@@ -311,17 +311,17 @@ public class ControladorVista {
                         vehicle.setX((int) endX);
                         break;
                     case "Derecha":
-                        endX = interseccion.getLayoutX() + interseccion.getWidth() - vehiculo.getLayoutX();
+                        endX = Referenciia_sur.getLayoutY() - vehiculo.getLayoutY();
                         transition.setByX(endX);
-                        endY = interseccion.getLayoutY() + interseccion.getHeight() - vehiculo.getLayoutY();
+                        endY =- Referenciia_sur.getLayoutX() / 3;
                         transition2.setByY(endY);
                         vehicle.setX((int) endX);
                         vehicle.setY((int) endY);
                         break;
                     case "Izquierda":
-                        endX = interseccion.getLayoutX() + interseccion.getWidth() - vehiculo.getLayoutX();
+                        endX = -Referenciia_norte.getLayoutX() /4;
                         transition.setByX(endX);
-                        endY = interseccion.getLayoutY() - vehiculo.getLayoutY() - vehiculo.getHeight();
+                        endY = Referenciia_norte.getLayoutY() - vehiculo.getLayoutY();
                         transition2.setByY(endY);
                         vehicle.setX((int) endX);
                         vehicle.setY((int) endY);
@@ -343,17 +343,17 @@ public class ControladorVista {
                         vehicle.setX((int) endX);
                         break;
                     case "Derecha":
-                        endX = interseccion.getLayoutX() - vehiculo.getLayoutX() - vehiculo.getWidth();
+                        endX =Referenciia_norte.getLayoutX() / 2;
                         transition.setByX(endX);
-                        endY = interseccion.getLayoutY() - vehiculo.getLayoutY() - vehiculo.getHeight();
+                        endY = Referenciia_norte.getLayoutY() - vehiculo.getLayoutY();
                         transition2.setByY(endY);
                         vehicle.setX((int) endX);
                         vehicle.setY((int) endY);
                         break;
                     case "Izquierda":
-                        endX = interseccion.getLayoutX() - vehiculo.getLayoutX() - vehiculo.getWidth();
+                        endX = Referenciia_sur.getLayoutX() / 5;
                         transition.setByX(endX);
-                        endY = interseccion.getLayoutY() + interseccion.getHeight() - vehiculo.getLayoutY();
+                        endY =Referenciia_sur.getLayoutY() - vehiculo.getLayoutY();
                         transition2.setByY(endY);
                         vehicle.setX((int) endX);
                         vehicle.setY((int) endY);
