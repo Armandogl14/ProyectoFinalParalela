@@ -83,6 +83,7 @@ public class ControladorEscenario2 {
         TrafficLight light4 = new TrafficLight("L4");
         lowerLights.add(light3);
         lowerLights.add(light4);
+        changeTrafficLights();
     }
 /*
    =
@@ -173,24 +174,28 @@ private void handleBtnNormalNorteAction() {
             if (green) {
                 switch (light.getId()) {
                     case "L1":
+                        System.out.println("Cambiando luz 1 a verde");
                         Semaforo_1.setFill(Color.GREEN);
                         Semaforo_2.setFill(Color.GREEN);
                         Semaforo_3.setFill(Color.RED);
                         Semaforo_4.setFill(Color.RED);
                         break;
                     case "L2":
+                        System.out.println("Cambiando luz 2 a verde");
                         Semaforo_1.setFill(Color.GREEN);
                         Semaforo_2.setFill(Color.GREEN);
                         Semaforo_3.setFill(Color.RED);
                         Semaforo_4.setFill(Color.RED);
                         break;
                     case "L3":
+                        System.out.println("Cambiando luz 3 a verde");
                         Semaforo_1.setFill(Color.RED);
                         Semaforo_2.setFill(Color.RED);
                         Semaforo_3.setFill(Color.GREEN);
                         Semaforo_4.setFill(Color.GREEN);
                         break;
                     case "L4":
+                        System.out.println("Cambiando luz 4 a verde");
                         Semaforo_1.setFill(Color.RED);
                         Semaforo_2.setFill(Color.RED);
                         Semaforo_3.setFill(Color.GREEN);
