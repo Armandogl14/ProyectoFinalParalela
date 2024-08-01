@@ -1,6 +1,6 @@
 package com.example.poyectofinalparalela.visuales;
 
-import com.example.poyectofinalparalela.transito.Intersection;
+import com.example.poyectofinalparalela.transito.Interseccion_caso2;
 import com.example.poyectofinalparalela.transito.TrafficLight;
 import com.example.poyectofinalparalela.transito.Vehicle;
 import javafx.animation.TranslateTransition;
@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
@@ -22,8 +23,8 @@ public class ControladorEscenario2 {
     private ConcurrentLinkedQueue<Vehicle> vehicles = new ConcurrentLinkedQueue<>(); // prueba con este, no es tan jodon con la prioridad
     private List<Vehicle> vehicleList = new LinkedList<>();
     private Vehicle vehicle;
-    private Intersection Intersection ;
-    private Intersection Intersection2 ;
+    private Interseccion_caso2 Intersection ;
+    private Interseccion_caso2 Intersection2 ;
 
     @FXML
     private ImageView imageView;
@@ -52,83 +53,112 @@ public class ControladorEscenario2 {
     @FXML
     private Button Btn_emergencia_sur;
     @FXML
-    private Pane pane;
+    private Pane pane = new Pane();
+    @FXML
+    private Circle Semaforo_1;
+
+    @FXML
+    private Circle Semaforo_2;
+
+    @FXML
+    private Circle Semaforo_3;
+
+    @FXML
+    private Circle Semaforo_4;
 
     private List<TrafficLight> upperLights;
     private List<TrafficLight> lowerLights;
 
     public void initialize() {
         //Aqui se llama el constructor que manejes los hilos
-        this.Intersection = new Intersection("I1", true, null);
-        this.Intersection2 = new Intersection("I2", true, null);
+        this.Intersection = new Interseccion_caso2("I1", true, this);
+        this.Intersection2 = new Interseccion_caso2("I2", true, this);
+        upperLights = new ArrayList<>();
+        lowerLights = new ArrayList<>();
+        TrafficLight light1 = new TrafficLight("L1");
+        TrafficLight light2 = new TrafficLight("L2");
+        upperLights.add(light1);
+        upperLights.add(light2);
+        TrafficLight light3 = new TrafficLight("L3");
+        TrafficLight light4 = new TrafficLight("L4");
+        lowerLights.add(light3);
+        lowerLights.add(light4);
     }
-
-    @FXML
-    private void handleBtnNormalNorteAction() {
-        // Handle action for Btn_normal_norte
-        String direccion = getDireccion();
-        Vehicle carro = new Vehicle("V"+ Intersection.getvID(), false, direccion, "N", 666, 0, 30, 20, null);
-//        addVehicle(carro);
-        Intersection.addVehicle(carro);
-
-    }
+/*
+   =
+   =
+   =
+   =
+   =
+    ===================Metodos de los botones===================
+ */
+@FXML
+private void handleBtnNormalNorteAction() {
+    String direccion = getDireccion();
+    Vehicle carro = new Vehicle("V" + Intersection.getvID(), false, direccion, "N", 666, 0, 30, 20, null);
+    Intersection.addVehicle(carro);
+    manageIntersection(carro, Intersection);
+}
 
     @FXML
     private void handleBtnEmergenciaNorteAction() {
-        // Handle action for Btn_emergecia_norte
-        System.out.println("Botón norte emergencia presionado.");
-        // Aquí va la lógica específica para este botón
-        //como crea un carro en logico y lo visual y hacer un cambio de estado para saber que hay un vehiculo de emergencia
         String direccion = getDireccion();
-        Vehicle carro = new Vehicle("V"+ Intersection.getvID(), true, direccion, "N", 666, 0, 30, 20, null);
-        //addVehicle(carro);
+        Vehicle carro = new Vehicle("V" + Intersection.getvID(), true, direccion, "N", 666, 0, 30, 20, null);
         Intersection.addVehicle(carro);
-        while(!Intersection.isIntersectionFree()){
-            System.out.println("La interseccion esta ocupada");
-        }
-        Intersection.handleEmergency("N");
+        manageIntersection(carro, Intersection);
     }
 
     @FXML
     private void handleBtnNormalSurAction() {
-        // Handle action for Btn_normal_sur
         String direccion = getDireccion();
-        Vehicle carro = new Vehicle("V"+ Intersection.getvID(), false, direccion, "S", 838, 664, 30, 20, null);
-        addVehicle(carro);
-        Intersection.addVehicle(carro);
+        Vehicle carro = new Vehicle("V" + Intersection.getvID(), false, direccion, "S", 838, 664, 30, 20, null);
+        Intersection2.addVehicle(carro);
+        manageIntersection(carro, Intersection2);
     }
 
     @FXML
     private void handleBtnEmergenciaSurAction() {
-        // Handle action for Btn_emergecia_sur
         String direccion = getDireccion();
-        Vehicle carro = new Vehicle("V"+ Intersection.getvID(), true, direccion, "S", 838, 664, 30, 20, null);
-        addVehicle(carro);
-        Intersection.addVehicle(carro);
-        while(!Intersection.isIntersectionFree()){
-            System.out.println("La interseccion esta ocupada");
-        }
-        Intersection.handleEmergency("S");
+        Vehicle carro = new Vehicle("V" + Intersection.getvID(), true, direccion, "S", 838, 664, 30, 20, null);
+        Intersection2.addVehicle(carro);
+        manageIntersection(carro, Intersection2);
     }
-
+    /*
+       =
+       =
+       =
+       =
+       =
+        ===================Metodos de los botones===================
+     */
     private void changeTrafficLights() {
-        // New thread to change the traffic lights every 15 seconds, if the upper lights are green, the lower lights will be red and vice versa
         Thread controlThread = new Thread(() -> {
             boolean upperGreen = true;
-            while(true){
-                if(upperGreen){
+            while (true) {
+                if (upperGreen) {
                     setGreenLights(upperLights, true);
                     setGreenLights(lowerLights, false);
+
+                    for (Vehicle vehicle : vehicles) {
+                        if (vehicle.getOrigin().equals("N")) {
+                            manageIntersection(vehicle, Intersection);
+                        }
+                    }
                 } else {
                     setGreenLights(upperLights, false);
                     setGreenLights(lowerLights, true);
+
+                    for (Vehicle vehicle : vehicles) {
+                        if (vehicle.getOrigin().equals("S")) {
+                            manageIntersection(vehicle, Intersection2);
+                        }
+                    }
                 }
                 upperGreen = !upperGreen;
                 try {
                     Thread.sleep(15000);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
-
+                    Thread.currentThread().interrupt();
                 }
             }
         });
@@ -140,28 +170,73 @@ public class ControladorEscenario2 {
         for (TrafficLight light : lights) {
             light.setGreen(green);
             System.out.println("Cambiando luz " + light.getId() + " a " + (green ? "verde" : "rojo"));
+            if (green) {
+                switch (light.getId()) {
+                    case "L1":
+                        Semaforo_1.setFill(Color.GREEN);
+                        Semaforo_2.setFill(Color.GREEN);
+                        Semaforo_3.setFill(Color.RED);
+                        Semaforo_4.setFill(Color.RED);
+                        break;
+                    case "L2":
+                        Semaforo_1.setFill(Color.GREEN);
+                        Semaforo_2.setFill(Color.GREEN);
+                        Semaforo_3.setFill(Color.RED);
+                        Semaforo_4.setFill(Color.RED);
+                        break;
+                    case "L3":
+                        Semaforo_1.setFill(Color.RED);
+                        Semaforo_2.setFill(Color.RED);
+                        Semaforo_3.setFill(Color.GREEN);
+                        Semaforo_4.setFill(Color.GREEN);
+                        break;
+                    case "L4":
+                        Semaforo_1.setFill(Color.RED);
+                        Semaforo_2.setFill(Color.RED);
+                        Semaforo_3.setFill(Color.GREEN);
+                        Semaforo_4.setFill(Color.GREEN);
+                        break;
+                }
+            }
             //Aqui va el metodo de cambiar la luz en la vista
             //Tambien los carros de esa calle se mueven
         }
     }
+
+    private void handleEmergencyTrafficLights(Vehicle emergencyVehicle) {
+        // Detect the intersection and change the lights accordingly
+        if (emergencyVehicle.getOrigin().equals("N")) {
+            setGreenLights(upperLights, true);
+            setGreenLights(lowerLights, false);
+        } else if (emergencyVehicle.getOrigin().equals("S")) {
+            setGreenLights(upperLights, false);
+            setGreenLights(lowerLights, true);
+        }
+    }
+
+
+    private void manageIntersection(Vehicle vehicle, Interseccion_caso2 intersection) {
+        if (vehicle.isEmergency()) {
+            intersection.handleEmergency(vehicle);
+        } else {
+            intersection.handleNormal(vehicle);
+        }
+    }
+
+    private void crossIntersection(Vehicle vehicle) {
+        // Lógica para animar el cruce de la intersección
+        crussingVisual(vehicle);
+        System.out.println("El vehículo " + vehicle.getId() + " ha cruzado la intersección.");
+    }
+
     //================Aqui estan los metodos basicos================
     public void addVehicle(Vehicle vehicle) {
         Vehicle lastVehicle = getLastVehicle();
         if (lastVehicle == null) {
             vehicles.add(vehicle);
             System.out.println("Vehicle " + vehicle.getId() + " added to the queue.");
-            addVehicleVisual();
-            vehicleList.add(vehicle);
-            return;
-        } else if (vehicle.getId() != lastVehicle.getId() ) {
-            vehicles.add(vehicle);
-            System.out.println("Vehicle " + vehicle.getId() + " added to the queue.");
-            addVehicleVisual();
-            vehicleList.add(vehicle);
-        }else{
-            System.out.println("Vehicle " + vehicle.getId() + " already in the queue.");
+            addVehicleVisual(vehicle);
         }
-
     }
     public String getDireccion() {
         String[] directions = {"Izquierda", "Derecha", "Recto", "U-Turn"};
@@ -169,135 +244,110 @@ public class ControladorEscenario2 {
         // Verificación adicional, innecesaria en este contexto pero útil para demostrar el enfoque
         return direccion != null ? direccion : "Recto"; // Devuelve "Izquierda" si, por alguna razón, se obtiene null
     }
-
-    public void addVehicleVisual() {
-        //Aqui va el metodo de agregar un carro a la vista
-        if (!vehicleList.isEmpty()) {
-            Vehicle vehicle = vehicleList.get(vehicleList.size() - 1); // Tomamos el último vehículo añadido
-            Rectangle vehiculo = null;
-            if (vehicle != null) {
-                // Crear el rectángulo que representa el vehículo
-                if (vehicle.isEmergency()) {
-                    vehiculo = new Rectangle(vehicle.getSizeX(), vehicle.getSizeY(), Color.BLUE);
-                    vehiculo.setStroke(Color.RED);
-                    vehiculo.setStrokeWidth(2);
-                } else {
-                    vehiculo = new Rectangle(vehicle.getSizeX(), vehicle.getSizeY(), Color.RED);
-                }
-
-                // Determinar la posición inicial del vehículo basado en su dirección
-                double startX = 0;
-                double startY = 0;
-                switch (vehicle.getOrigin()) {
-                    case "N":
-                        switch (vehicle.getDirection()) {
-                            case "Recto":
-                                startX = Ref_Norte_Centro.getLayoutX();
-                                startY = Ref_Norte_Centro.getLayoutY();
-                                vehicle.setX((int) startX);
-                                vehicle.setY((int) startY);
-                                break;
-                            case "Izquierda":
-                                startX = Ref_Norte_izquierda.getLayoutX();
-                                startY = Ref_Norte_izquierda.getLayoutY();
-                                vehicle.setX((int) startX);
-                                vehicle.setY((int) startY);
-                                break;
-                            case "Derecha":
-                                startX = Ref_Norte_Derecha.getLayoutX();
-                                startY = Ref_Norte_Derecha.getLayoutY();
-                                vehicle.setX((int) startX);
-                                vehicle.setY((int) startY);
-                                break;
-                            case "U-Turn":
-                                startX = Ref_Norte_izquierda.getLayoutX();
-                                startY = Ref_Norte_izquierda.getLayoutY();
-                                vehicle.setX((int) startX);
-                                vehicle.setY((int) startY);
-                                break;
-                        }
-                        break;
-                    case "S":
-                        switch (vehicle.getDirection()) {
-                            case "Recto":
-                                startX = Ref_sur_Centro1.getLayoutX();
-                                startY = Ref_sur_Centro1.getLayoutY();
-                                vehicle.setX((int) startX);
-                                vehicle.setY((int) startY);
-                                break;
-                            case "Izquierda":
-                                startX = Ref_sur_izquierda1.getLayoutX();
-                                startY = Ref_sur_izquierda1.getLayoutY();
-                                vehicle.setX((int) startX);
-                                vehicle.setY((int) startY);
-                                break;
-                            case "Derecha":
-                                startX = Ref_sur_Derecha1.getLayoutX();
-                                startY = Ref_sur_Derecha1.getLayoutY();
-                                vehicle.setX((int) startX);
-                                vehicle.setY((int) startY);
-                                break;
-                            case "U-Turn":
-                                startX = Ref_sur_izquierda1.getLayoutX();
-                                startY = Ref_sur_izquierda1.getLayoutY();
-                                vehicle.setX((int) startX);
-                                vehicle.setY((int) startY);
-                                break;
-                        }
-                        break;
-                }
-
-                vehiculo.setLayoutX(startX);
-                vehiculo.setLayoutY(startY);
-
-                // Añadir el rectángulo a la lista de vehículos y al pane
-                vehiculos.put(vehicle.getId(), vehiculo);
-                pane.getChildren().add(vehiculo);
-
-                // Crear la transición para mover el vehículo hacia la intersección
-                TranslateTransition transition = new TranslateTransition();
-                transition.setNode(vehiculo);
-                transition.setDuration(Duration.seconds(2)); // Duración de la transición
-
-                double endX = 0;
-                double endY = 0;
-                switch(vehicle.getOrigin()){
-                    case "N":
-                        endY = Interseccion_1.getLayoutX() - startX - vehicle.getSizeX();
-                        vehicle.setY((int) endY);
-                        break;
-                    case "S":
-                        endY = Interseccion_2.getLayoutX() + Interseccion_2.getHeight() - startX;
-                        vehicle.setY((int) endY);
-                        break;
-                }
-                transition.setByX(endX);
-                transition.setByY(endY);
-
-                transition.play();
-                //=============
-                // Verificar si el vehículo está en la intersección
-                transition.setOnFinished(event -> {
-//                    if (isVehicleInIntersection(vehicle)) {
-                    // Lógica específica si el vehículo está en la intersección
-//                        System.out.println("El vehículo está en la intersección.");
-                    while (!Intersection.isIntersectionFree()) {
-//                            System.out.println("La intersección está ocupada.");
-                    }
-//                        System.out.println("El vehiculo" + vehicle.getId() + " esta cruzando la interseccion");
-                    Intersection.setIntersectionFree(false);
-                    //Animacion de cruzar la interseccion
-//                    crussingVisual(vehicle);
-                    Intersection.setIntersectionFree(true);
-                    //sacar vehiculos de la cola (quitalo si da problemas)
-//                        System.out.println("El vehiculo" + vehicle.getId() + " ha cruzado la interseccion");
-                    Intersection.getVehicles().remove(vehicle);
-                    vehicles.remove(vehicle);
-//                    }
-                });
-            }
+    /*
+   =
+   =
+   =
+   =
+   =
+    ===================Metodos de los Visuales===================
+ */
+    public void addVehicleVisual(Vehicle vehicle) {
+        // Crear el rectángulo que representa el vehículo
+        Rectangle vehiculo;
+        if (vehicle.isEmergency()) {
+            vehiculo = new Rectangle(vehicle.getSizeX(), vehicle.getSizeY(), Color.BLUE);
+            vehiculo.setStroke(Color.RED);
+            vehiculo.setStrokeWidth(2);
+        } else {
+            vehiculo = new Rectangle(vehicle.getSizeX(), vehicle.getSizeY(), Color.RED);
         }
+
+        // Determinar la posición inicial del vehículo basado en su dirección
+        double startX = 0;
+        double startY = 0;
+        switch (vehicle.getOrigin()) {
+            case "N":
+                switch (vehicle.getDirection()) {
+                    case "Recto":
+                        startX = Ref_Norte_Centro.getLayoutX();
+                        startY = Ref_Norte_Centro.getLayoutY();
+                        break;
+                    case "Izquierda":
+                        startX = Ref_Norte_izquierda.getLayoutX();
+                        startY = Ref_Norte_izquierda.getLayoutY();
+                        break;
+                    case "Derecha":
+                        startX = Ref_Norte_Derecha.getLayoutX();
+                        startY = Ref_Norte_Derecha.getLayoutY();
+                        break;
+                    case "U-Turn":
+                        startX = Ref_Norte_izquierda.getLayoutX();
+                        startY = Ref_Norte_izquierda.getLayoutY();
+                        break;
+                }
+                break;
+            case "S":
+                switch (vehicle.getDirection()) {
+                    case "Recto":
+                        startX = Ref_sur_Centro1.getLayoutX();
+                        startY = Ref_sur_Centro1.getLayoutY();
+                        break;
+                    case "Izquierda":
+                        startX = Ref_sur_izquierda1.getLayoutX();
+                        startY = Ref_sur_izquierda1.getLayoutY();
+                        break;
+                    case "Derecha":
+                        startX = Ref_sur_Derecha1.getLayoutX();
+                        startY = Ref_sur_Derecha1.getLayoutY();
+                        break;
+                    case "U-Turn":
+                        startX = Ref_sur_izquierda1.getLayoutX();
+                        startY = Ref_sur_izquierda1.getLayoutY();
+                        break;
+                }
+                break;
+        }
+
+        vehiculo.setLayoutX(startX);
+        vehiculo.setLayoutY(startY);
+
+        // Añadir el rectángulo a la lista de vehículos y al pane
+        vehiculos.put(vehicle.getId(), vehiculo);
+        pane.getChildren().add(vehiculo);
+
+        // Crear la transición para mover el vehículo hacia la intersección
+        TranslateTransition transition = new TranslateTransition();
+        transition.setNode(vehiculo);
+        transition.setDuration(Duration.seconds(2)); // Duración de la transición
+
+        double endX = startX;
+        double endY = startY;
+        switch(vehicle.getOrigin()){
+            case "N":
+                endY = Interseccion_1.getLayoutY() - startY - vehicle.getSizeY();
+                break;
+            case "S":
+                endY = Interseccion_2.getLayoutY() + Interseccion_2.getHeight() - startY;
+                break;
+        }
+        transition.setByX(endX);
+        transition.setByY(endY);
+
+        transition.play();
+
+        // Verificar si el vehículo está en la intersección al finalizar la transición
+        transition.setOnFinished(event -> {
+            if (vehicle.getOrigin().equals("N")) {
+                Intersection.handleNormal(vehicle);
+            } else if (vehicle.getOrigin().equals("S")) {
+                Intersection2.handleNormal(vehicle);
+            }
+            pane.getChildren().remove(vehiculo);
+            vehicles.remove(vehicle);
+        });
     }
+
     public void crussingVisual(Vehicle vehicle) {
         Rectangle vehiculo = vehiculos.get(vehicle.getId());
 
@@ -366,9 +416,16 @@ public class ControladorEscenario2 {
 //                }
 //                break;
 //        }
-//        transition.play();
+        transition.play();
     }
-
+    /*
+   =
+   =
+   =
+   =
+   =
+    ===================Metodos de los Visuales===================
+ */
 
     private Vehicle getLastVehicleInOrigin(String origin) {
         Stack<Vehicle> stack = new Stack<>();
@@ -387,4 +444,7 @@ public class ControladorEscenario2 {
         List<Vehicle> vehicleList = new ArrayList<>(vehicles);
         return vehicleList.get(vehicleList.size() - 1); // Devuelve el último vehículo
     }
+
+
+
 }

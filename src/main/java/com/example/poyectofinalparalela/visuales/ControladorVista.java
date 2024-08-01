@@ -234,7 +234,7 @@ public class ControladorVista {
 
         TranslateTransition transition2 = new TranslateTransition();
         transition2.setNode(vehiculo);
-        transition2.setDuration(Duration.seconds(2));
+        transition2.setDuration(Duration.seconds(1));
 
         double endX = 0;
         double endY = 0;
