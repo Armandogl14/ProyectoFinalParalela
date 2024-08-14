@@ -53,7 +53,7 @@ public class ControladorEscenario2 {
     @FXML
     private Button Btn_emergencia_sur;
     @FXML
-    private Pane pane = new Pane();
+    private Pane pane;
     @FXML
     private Circle Semaforo_1;
 
@@ -97,32 +97,36 @@ public class ControladorEscenario2 {
 private void handleBtnNormalNorteAction() {
     String direccion = getDireccion();
     Vehicle carro = new Vehicle("V" + Intersection.getvID(), false, direccion, "N", 666, 0, 30, 20, null);
-    Intersection.addVehicle(carro);
-    manageIntersection(carro, Intersection);
+    addVehicle(carro);
+    //    Intersection.addVehicle(carro);
+    //    manageIntersection(carro, Intersection);
 }
 
     @FXML
     private void handleBtnEmergenciaNorteAction() {
         String direccion = getDireccion();
         Vehicle carro = new Vehicle("V" + Intersection.getvID(), true, direccion, "N", 666, 0, 30, 20, null);
-        Intersection.addVehicle(carro);
-        manageIntersection(carro, Intersection);
+        addVehicleVisual(carro);
+        //    Intersection.addVehicle(carro);
+        //    manageIntersection(carro, Intersection);
     }
 
     @FXML
     private void handleBtnNormalSurAction() {
         String direccion = getDireccion();
         Vehicle carro = new Vehicle("V" + Intersection.getvID(), false, direccion, "S", 838, 664, 30, 20, null);
-        Intersection2.addVehicle(carro);
-        manageIntersection(carro, Intersection2);
+        addVehicle(carro);
+        //    Intersection.addVehicle(carro);
+        //    manageIntersection(carro, Intersection);
     }
 
     @FXML
     private void handleBtnEmergenciaSurAction() {
         String direccion = getDireccion();
         Vehicle carro = new Vehicle("V" + Intersection.getvID(), true, direccion, "S", 838, 664, 30, 20, null);
-        Intersection2.addVehicle(carro);
-        manageIntersection(carro, Intersection2);
+        addVehicleVisual(carro);
+        //    Intersection.addVehicle(carro);
+        //    manageIntersection(carro, Intersection);
     }
     /*
        =
@@ -230,21 +234,18 @@ private void handleBtnNormalNorteAction() {
 
     private void crossIntersection(Vehicle vehicle) {
         // Lógica para animar el cruce de la intersección
-        crussingVisual(vehicle);
+//        crussingVisual(vehicle);
         System.out.println("El vehículo " + vehicle.getId() + " ha cruzado la intersección.");
     }
 
     //================Aqui estan los metodos basicos================
     public void addVehicle(Vehicle vehicle) {
-        Vehicle lastVehicle = getLastVehicle();
-        if (lastVehicle == null) {
-            vehicles.add(vehicle);
-            System.out.println("Vehicle " + vehicle.getId() + " added to the queue.");
-            addVehicleVisual(vehicle);
-        }
+        vehicles.add(vehicle);
+        System.out.println("Vehicle " + vehicle.getId() + " added to the queue.");
+        addVehicleVisual(vehicle);
     }
     public String getDireccion() {
-        String[] directions = {"Izquierda", "Derecha", "Recto", "U-Turn"};
+        String[] directions = {"Izquierda", "Derecha", "Recto", "U-Turn","Izquierda_2"};
         String direccion = directions[(int) (Math.random() * directions.length)];
         // Verificación adicional, innecesaria en este contexto pero útil para demostrar el enfoque
         return direccion != null ? direccion : "Recto"; // Devuelve "Izquierda" si, por alguna razón, se obtiene null
@@ -260,14 +261,19 @@ private void handleBtnNormalNorteAction() {
     public void addVehicleVisual(Vehicle vehicle) {
         // Crear el rectángulo que representa el vehículo
         Rectangle vehiculo;
-        if (vehicle.isEmergency()) {
-            vehiculo = new Rectangle(vehicle.getSizeX(), vehicle.getSizeY(), Color.BLUE);
-            vehiculo.setStroke(Color.RED);
-            vehiculo.setStrokeWidth(2);
+        if (vehicle != null){
+            if (vehicle.isEmergency()) {
+                vehiculo = new Rectangle(vehicle.getSizeX(), vehicle.getSizeY(), Color.BLUE);
+                vehiculo.setStroke(Color.RED);
+                vehiculo.setStrokeWidth(2);
+            } else {
+                vehiculo = new Rectangle(vehicle.getSizeX(), vehicle.getSizeY(), Color.RED);
+            } 
         } else {
-            vehiculo = new Rectangle(vehicle.getSizeX(), vehicle.getSizeY(), Color.RED);
+            vehiculo = null;
         }
 
+        System.out.println("Vehículo creado: " + vehiculo.getId());
         // Determinar la posición inicial del vehículo basado en su dirección
         double startX = 0;
         double startY = 0;
@@ -277,18 +283,32 @@ private void handleBtnNormalNorteAction() {
                     case "Recto":
                         startX = Ref_Norte_Centro.getLayoutX();
                         startY = Ref_Norte_Centro.getLayoutY();
+                        vehicle.setX((int)startX);
+                        vehicle.setY((int)startY);
                         break;
                     case "Izquierda":
                         startX = Ref_Norte_izquierda.getLayoutX();
                         startY = Ref_Norte_izquierda.getLayoutY();
+                        vehicle.setX((int)startX);
+                        vehicle.setY((int)startY);
+                        break;
+                    case "Izquierda_2":
+                        startX = Ref_Norte_izquierda.getLayoutX();
+                        startY = Ref_Norte_izquierda.getLayoutY();
+                        vehicle.setX((int)startX);
+                        vehicle.setY((int)startY);
                         break;
                     case "Derecha":
                         startX = Ref_Norte_Derecha.getLayoutX();
                         startY = Ref_Norte_Derecha.getLayoutY();
+                        vehicle.setX((int)startX);
+                        vehicle.setY((int)startY);
                         break;
                     case "U-Turn":
                         startX = Ref_Norte_izquierda.getLayoutX();
                         startY = Ref_Norte_izquierda.getLayoutY();
+                        vehicle.setX((int)startX);
+                        vehicle.setY((int)startY);
                         break;
                 }
                 break;
@@ -297,23 +317,36 @@ private void handleBtnNormalNorteAction() {
                     case "Recto":
                         startX = Ref_sur_Centro1.getLayoutX();
                         startY = Ref_sur_Centro1.getLayoutY();
+                        vehicle.setX((int)startX);
+                        vehicle.setY((int)startY);
                         break;
                     case "Izquierda":
                         startX = Ref_sur_izquierda1.getLayoutX();
                         startY = Ref_sur_izquierda1.getLayoutY();
+                        vehicle.setX((int)startX);
+                        vehicle.setY((int)startY);
+                        break;
+                    case "Izquierda_2":
+                        startX = Ref_sur_izquierda1.getLayoutX();
+                        startY = Ref_sur_izquierda1.getLayoutY();
+                        vehicle.setX((int)startX);
+                        vehicle.setY((int)startY);
                         break;
                     case "Derecha":
                         startX = Ref_sur_Derecha1.getLayoutX();
                         startY = Ref_sur_Derecha1.getLayoutY();
+                        vehicle.setX((int)startX);
+                        vehicle.setY((int)startY);
                         break;
                     case "U-Turn":
                         startX = Ref_sur_izquierda1.getLayoutX();
                         startY = Ref_sur_izquierda1.getLayoutY();
+                        vehicle.setX((int)startX);
+                        vehicle.setY((int)startY);
                         break;
                 }
                 break;
         }
-
         vehiculo.setLayoutX(startX);
         vehiculo.setLayoutY(startY);
 
@@ -327,17 +360,20 @@ private void handleBtnNormalNorteAction() {
         transition.setDuration(Duration.seconds(2)); // Duración de la transición
 
         double endX = startX;
+        System.out.println("StartX: " + startX +"endX" +endX);
         double endY = startY;
+        System.out.println("StartY: " + startY +"endY" +endY);
         switch(vehicle.getOrigin()){
             case "N":
-                endY = Interseccion_1.getLayoutY() - startY - vehicle.getSizeY();
+                endX = Interseccion_1.getLayoutX() ;
+
                 break;
             case "S":
-                endY = Interseccion_2.getLayoutY() + Interseccion_2.getHeight() - startY;
+                endX = -Interseccion_1.getLayoutX();
                 break;
         }
         transition.setByX(endX);
-        transition.setByY(endY);
+//        transition.setByY(endY);
 
         transition.play();
 
@@ -348,24 +384,25 @@ private void handleBtnNormalNorteAction() {
             } else if (vehicle.getOrigin().equals("S")) {
                 Intersection2.handleNormal(vehicle);
             }
-            pane.getChildren().remove(vehiculo);
-            vehicles.remove(vehicle);
+//            pane.getChildren().remove(vehiculo);
+//            vehicles.remove(vehicle);
+            System.out.println("Vehículo removido del pane: " + vehicle.getId());
         });
     }
 
-    public void crussingVisual(Vehicle vehicle) {
-        Rectangle vehiculo = vehiculos.get(vehicle.getId());
-
-        TranslateTransition transition = new TranslateTransition();
-        transition.setNode(vehiculo);
-        transition.setDuration(Duration.seconds(2));
-
-        TranslateTransition transition2 = new TranslateTransition();
-        transition2.setNode(vehiculo);
-        transition2.setDuration(Duration.seconds(1));
-
-        double endX = vehicle.getX();
-        double endY = vehicle.getY();
+//    public void crussingVisual(Vehicle vehicle) {
+//        Rectangle vehiculo = vehiculos.get(vehicle.getId());
+//
+//        TranslateTransition transition = new TranslateTransition();
+//        transition.setNode(vehiculo);
+//        transition.setDuration(Duration.seconds(2));
+//
+//        TranslateTransition transition2 = new TranslateTransition();
+//        transition2.setNode(vehiculo);
+//        transition2.setDuration(Duration.seconds(1));
+//
+//        double endX = vehicle.getX();
+//        double endY = vehicle.getY();
 //        switch (vehicle.getOrigin()) {
 //            case "N":
 //                switch (vehicle.getDirection()) {
@@ -385,7 +422,7 @@ private void handleBtnNormalNorteAction() {
 //                        transition2.setByY(Referenciia_oeste.getLayoutY() / 4);
 //                        transition2.play();
 //                        break;
-//                    case "U-Turn":
+//                   case "U-Turn":
 //                        endY = Interseccion_1.getHeight() * 2;
 //                        transition.setByY(Referenciia_norte.getLayoutY() * 2);
 //                        transition2.setByY(Referenciia_norte.getLayoutX() + 4);
@@ -421,8 +458,8 @@ private void handleBtnNormalNorteAction() {
 //                }
 //                break;
 //        }
-        transition.play();
-    }
+//        transition.play();
+//    }
     /*
    =
    =
