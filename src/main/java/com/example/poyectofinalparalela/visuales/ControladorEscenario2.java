@@ -262,7 +262,7 @@ private void handleBtnNormalNorteAction() {
         addVehicleVisual(vehicle);
     }
     public String getDireccion() {
-        String[] directions = {"Izquierda", "Derecha", "Recto", "U-Turn", "Izquierda_2"};
+        String[] directions = {"Izquierda", "Derecha", "Recto", "U-Turn", "Izquierda_2","Derecha_2"};
         String direccion = directions[(int) (Math.random() * directions.length)];
         // Verificación adicional, innecesaria en este contexto pero útil para demostrar el enfoque
         return direccion != null ? direccion : "Recto"; // Devuelve "Izquierda" si, por alguna razón, se obtiene null
@@ -321,6 +321,12 @@ private void handleBtnNormalNorteAction() {
                         vehicle.setX((int)startX);
                         vehicle.setY((int)startY);
                         break;
+                    case "Derecha_2":
+                        startX = Ref_Norte_Derecha.getLayoutX();
+                        startY = Ref_Norte_Derecha.getLayoutY();
+                        vehicle.setX((int)startX);
+                        vehicle.setY((int)startY);
+                        break;
                     case "U-Turn":
                         startX = Ref_Norte_izquierda.getLayoutX();
                         startY = Ref_Norte_izquierda.getLayoutY();
@@ -355,6 +361,11 @@ private void handleBtnNormalNorteAction() {
                         vehicle.setX((int)startX);
                         vehicle.setY((int)startY);
                         break;
+                    case "Derecha_2":
+                        startX = Ref_sur_Derecha1.getLayoutX();
+                        startY = Ref_sur_Derecha1.getLayoutY();
+                        vehicle.setX((int)startX);
+                        vehicle.setY((int)startY);
                     case "U-Turn":
                         startX = Ref_sur_izquierda1.getLayoutX();
                         startY = Ref_sur_izquierda1.getLayoutY();
@@ -438,6 +449,14 @@ private void handleBtnNormalNorteAction() {
                         removeVehicle(vehicle.getId());
                         transition.setByX(endX);
                         break;
+                    case "Derecha_2":
+                        endX = Interseccion_2.getLayoutX() - Interseccion_2.getWidth() * 2;
+                        vehicle.setX((int) endX);
+                        vehicleListMiddle.add(vehicle);
+                        vehiclesMiddle.add(vehicle);
+                        removeVehicle(vehicle.getId());
+                        transition.setByX(endX);
+                        break;
                     case "Izquierda":
                         endX = ref_arriba_2.getLayoutX()/4;
                         endY = ref_arriba_2.getLayoutY() - vehiculo.getLayoutY();
@@ -485,6 +504,14 @@ private void handleBtnNormalNorteAction() {
                         removeVehicle(vehicle.getId());
                         transition.setByX(endX);
                         break;
+                    case "Derecha_2":
+                        endX = -Interseccion_2.getLayoutX() + Interseccion_2.getWidth() * 2;
+                        vehicle.setX((int) endX);
+                        vehicleListMiddle.add(vehicle);
+                        vehiclesMiddle.add(vehicle);
+                        removeVehicle(vehicle.getId());
+                        transition.setByX(endX);
+                        break;
                     case "Izquierda":
                         endX = -ref_sur_1.getLayoutX()/9;
                         endY = ref_sur_1.getLayoutY() - vehiculo.getLayoutY();
@@ -511,6 +538,109 @@ private void handleBtnNormalNorteAction() {
                         vehicle.setX((int) endX);
                         vehicle.setY((int) endY);
                         removeVehicle(vehicle.getId());
+                        break;
+                }
+                break;
+        }
+        transition.play();
+        transition.setOnFinished(event -> {
+            if (vehicle.getOrigin().equals("N")) {
+                Intersection.handleNormal(vehicle);
+            } else if (vehicle.getOrigin().equals("S")) {
+                Intersection2.handleNormal(vehicle);
+            }
+//            pane.getChildren().remove(vehiculo);
+//            vehicles.remove(vehicle);
+            System.out.println("Vehículo removido del pane: " + vehicle.getId());
+            crussingVisualMiddle(vehicle);
+        });
+    }
+
+    public void crussingVisualMiddle(Vehicle vehicle) {
+        Rectangle vehiculo = vehiculos.get(vehicle.getId());
+
+        TranslateTransition transition = new TranslateTransition();
+        transition.setNode(vehiculo);
+        transition.setDuration(Duration.seconds(2));
+
+        double endX = vehicle.getX();
+        double endY = vehicle.getY();
+        switch (vehicle.getOrigin()) {
+            case "N":
+                switch (vehicle.getDirection()) {
+                    case "Recto":
+                        endX = Ref_sur_Centro1.getLayoutX() - Interseccion_2.getWidth() * 2;
+                        vehicle.setX((int) endX);
+                        vehicleListMiddle.add(vehicle);
+                        vehiclesMiddle.add(vehicle);
+                        removeVehicle(vehicle.getId());
+                        transition.setByX(endX);
+                        break;
+                    case "Izquierda_2":
+                        endX = ref_arriba_1.getLayoutX()/4;
+                        endY = ref_arriba_1.getLayoutY() - vehiculo.getLayoutY();
+                        transition.setByX(endX);
+                        transition.setByY(endY);
+                        vehicle.setX((int) endX);
+                        vehicle.setY((int) endY);
+                        removeVehicle(vehicle.getId());
+                        break;
+                    case "Derecha_2":
+                        endX = ref_sur_1.getLayoutX()/4;
+                        endY = ref_sur_1.getLayoutY();
+                        transition.setByX(endX);
+                        transition.setByY(endY);
+                        vehicle.setX((int) endX);
+                        vehicle.setY((int) endY);
+                        removeVehicle(vehicle.getId());
+                        break;
+                    case "U-Turn":
+                        endX = Ref_Norte_Centro.getLayoutX();
+                        endY = Ref_sur_izquierda1.getLayoutY();
+                        transition.setByX(endX);
+                        transition.setByY(endY);
+                        vehicle.setX((int) endX);
+                        vehicle.setY((int) endY);
+                        removeVehicle(vehicle.getId());
+                        break;
+                }
+                break;
+            case "S":
+                switch (vehicle.getDirection()) {
+                    case "Recto":
+                        endX = -Ref_sur_Centro1.getLayoutX() + Interseccion_2.getWidth() * 2;
+                        vehicle.setX((int) endX);
+                        vehicleListMiddle.add(vehicle);
+                        vehiclesMiddle.add(vehicle);
+                        removeVehicleMiddle(vehicle.getId());
+                        transition.setByX(endX);
+                        break;
+                    case "Izquierda_2":
+                        endX = -ref_sur_2.getLayoutX()/9;
+                        endY = ref_sur_2.getLayoutY() - vehiculo.getLayoutY();
+                        transition.setByX(endX);
+                        transition.setByY(endY);
+                        vehicle.setX((int) endX);
+                        vehicle.setY((int) endY);
+                        removeVehicleMiddle(vehicle.getId());
+                        break;
+                    case "Derecha_2":
+                        endX = -ref_arriba_2.getLayoutX()/9;
+                        endY = ref_arriba_2.getLayoutY() - vehiculo.getLayoutY();
+                        transition.setByY(endY);
+                        transition.setByX(endX);
+                        vehicle.setX((int) endX);
+                        vehicle.setY((int) endY);
+                        removeVehicleMiddle(vehicle.getId());
+                        break;
+                    case "U-Turn":
+                        endX = Ref_sur_izquierda1.getLayoutX() - vehiculo.getLayoutX();
+                        endY = Ref_Norte_izquierda.getLayoutY() - vehiculo.getLayoutY();
+                        transition.setByX(endX);
+                        transition.setByY(endY);
+                        vehicle.setX((int) endX);
+                        vehicle.setY((int) endY);
+                        removeVehicleMiddle(vehicle.getId());
                         break;
                 }
                 break;
@@ -563,6 +693,38 @@ private void handleBtnNormalNorteAction() {
         // Remove from the list of vehicleList
         vehicleToRemove = null;
         for (Vehicle vehicle : vehicleList) {
+            if (vehicle.getId().equals(vehicleId)) {
+                vehicleToRemove = vehicle;
+                break;
+            }
+        }
+        if (vehicleToRemove != null) {
+            vehicleList.remove(vehicleToRemove);
+            System.out.println("Vehicle " + vehicleId + " removed from the list.");
+        } else {
+            System.out.println("Vehicle " + vehicleId + " not found in the list.");
+        }
+    }
+
+    public void removeVehicleMiddle(String vehicleId) {
+        // Remove from the list of vehicles
+        Vehicle vehicleToRemove = null;
+        for (Vehicle vehicle : vehiclesMiddle) {
+            if (vehicle.getId().equals(vehicleId)) {
+                vehicleToRemove = vehicle;
+                break;
+            }
+        }
+        if (vehicleToRemove != null) {
+            vehicles.remove(vehicleToRemove);
+            System.out.println("Vehicle " + vehicleId + " removed from the queue.");
+        } else {
+            System.out.println("Vehicle " + vehicleId + " not found in the queue.");
+        }
+
+        // Remove from the list of vehicleList
+        vehicleToRemove = null;
+        for (Vehicle vehicle : vehicleListMiddle) {
             if (vehicle.getId().equals(vehicleId)) {
                 vehicleToRemove = vehicle;
                 break;
