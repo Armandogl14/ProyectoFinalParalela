@@ -124,6 +124,7 @@ private void handleBtnNormalNorteAction() {
         String direccion = getDireccion();
         Vehicle carro = new Vehicle("V" + Intersection.getvID(), true, direccion, "N", 666, 0, 30, 20, null);
         addVehicleVisual(carro);
+        handleEmergencyTrafficLights(carro);
         //    Intersection.addVehicle(carro);
         //    manageIntersection(carro, Intersection);
     }
@@ -133,6 +134,7 @@ private void handleBtnNormalNorteAction() {
         String direccion = getDireccion();
         Vehicle carro = new Vehicle("V" + Intersection.getvID(), false, direccion, "S", 838, 664, 30, 20, null);
         addVehicle(carro);
+        handleEmergencyTrafficLights(carro);
         //    Intersection.addVehicle(carro);
         //    manageIntersection(carro, Intersection);
     }
@@ -142,6 +144,7 @@ private void handleBtnNormalNorteAction() {
         String direccion = getDireccion();
         Vehicle carro = new Vehicle("V" + Intersection.getvID(), true, direccion, "S", 838, 664, 30, 20, null);
         addVehicleVisual(carro);
+        handleEmergencyTrafficLights(carro);
         //    Intersection.addVehicle(carro);
         //    manageIntersection(carro, Intersection);
     }
@@ -197,30 +200,30 @@ private void handleBtnNormalNorteAction() {
                     case "L1":
                         System.out.println("Cambiando luz 1 a verde");
                         Semaforo_1.setFill(Color.GREEN);
-                        Semaforo_2.setFill(Color.GREEN);
+                        Semaforo_2.setFill(Color.RED);
                         Semaforo_3.setFill(Color.RED);
-                        Semaforo_4.setFill(Color.RED);
+                        Semaforo_4.setFill(Color.GREEN);
                         break;
                     case "L2":
                         System.out.println("Cambiando luz 2 a verde");
                         Semaforo_1.setFill(Color.GREEN);
-                        Semaforo_2.setFill(Color.GREEN);
+                        Semaforo_2.setFill(Color.RED);
                         Semaforo_3.setFill(Color.RED);
-                        Semaforo_4.setFill(Color.RED);
+                        Semaforo_4.setFill(Color.GREEN);
                         break;
                     case "L3":
                         System.out.println("Cambiando luz 3 a verde");
                         Semaforo_1.setFill(Color.RED);
-                        Semaforo_2.setFill(Color.RED);
+                        Semaforo_2.setFill(Color.GREEN);
                         Semaforo_3.setFill(Color.GREEN);
-                        Semaforo_4.setFill(Color.GREEN);
+                        Semaforo_4.setFill(Color.RED);
                         break;
                     case "L4":
                         System.out.println("Cambiando luz 4 a verde");
                         Semaforo_1.setFill(Color.RED);
-                        Semaforo_2.setFill(Color.RED);
+                        Semaforo_2.setFill(Color.GREEN);
                         Semaforo_3.setFill(Color.GREEN);
-                        Semaforo_4.setFill(Color.GREEN);
+                        Semaforo_4.setFill(Color.RED);
                         break;
                 }
             }
@@ -230,7 +233,6 @@ private void handleBtnNormalNorteAction() {
     }
 
     private void handleEmergencyTrafficLights(Vehicle emergencyVehicle) {
-        // Detect the intersection and change the lights accordingly
         if (emergencyVehicle.getOrigin().equals("N")) {
             setGreenLights(upperLights, true);
             setGreenLights(lowerLights, false);
@@ -737,7 +739,4 @@ private void handleBtnNormalNorteAction() {
             System.out.println("Vehicle " + vehicleId + " not found in the list.");
         }
     }
-
-
-
 }
