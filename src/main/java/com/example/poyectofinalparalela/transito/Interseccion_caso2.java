@@ -56,7 +56,7 @@ public class Interseccion_caso2 {
             }
             isIntersectionFree = false;
             System.out.println("Intersection is free");
-//            controladorVista.crussingVisual(vehicle);
+            controladorVista.crussingVisualIniciales(vehicle);
             vehicles.remove(vehicle);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -67,7 +67,7 @@ public class Interseccion_caso2 {
         }
     }
 
-    public void handleNormal(Vehicle vehicle) {
+    public void handleNormal(Vehicle vehicle, boolean middle) {
         lock.lock();
         try {
             while (!isIntersectionFree) {
@@ -76,7 +76,12 @@ public class Interseccion_caso2 {
             }
             isIntersectionFree = false;
             System.out.println("Intersection is free");
-//            controladorVista.crussingVisual(vehicle);
+            if(!middle){
+                System.out.println("Iniciales ============================<><><><><><><><><><><+++++++++++++++++");
+                controladorVista.crussingVisualIniciales(vehicle);
+            }else {
+                controladorVista.crussingVisualMiddle(vehicle);
+            }
             vehicles.remove(vehicle);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
