@@ -57,6 +57,7 @@ public class Interseccion_caso2 {
             isIntersectionFree = false;
             System.out.println("Intersection is free");
             controladorVista.crussingVisualIniciales(vehicle);
+            //0
             vehicles.remove(vehicle);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

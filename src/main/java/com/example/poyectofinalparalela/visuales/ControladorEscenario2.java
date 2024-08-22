@@ -255,6 +255,7 @@ public class  ControladorEscenario2 {
                 intersection.handleNormal(vehicle, true);
             } else {
                 intersection.handleNormal(vehicle, false);
+                //0
             }
 
         }
